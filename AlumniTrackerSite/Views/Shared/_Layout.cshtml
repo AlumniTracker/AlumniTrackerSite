@@ -1,34 +1,108 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AlumniTrackerSite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
+    <title>@ViewData["Title"] - AlumniSite</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/AlumniTrackerSite.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AlumniSite.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AlumniTrackerSite</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        <nav class="navbar navbar-expand-sm">
+        <div class="container"> @*this may be cause for formatting issue*@
+
+            
+
+                <div class="col align-self-start float-left">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/Images/Alumni-Logo-01.png" />
+                    </a>
+                </div>
+                        @*sociallinks*@
+
+                <div class="col-1 col align-self-start float-right">
+                    <ul class="navbar-nav flex-grow-1 justify-content-end">
+                        <li>
+                            <a class="nav-link" href="https://www.linkedin.com/groups/13706636/">
+                                <img src="~/Images/LinkedIn.png" />
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AlumniUsers" asp-action="Create">Create User</a>
+                        <li>
+                            <a class="nav-link" href="https://www.instagram.com/centralia_college_foundation/">
+                                <img src="~/Images/Instagram.png" />
+                            </a>
                         </li>
-                        <partial name="_LoginPartial" />
+                        <li>
+                            <a class="nav-link" href="https://www.facebook.com/CentraliaCollegeFoundation/">
+                                <img src="~/Images/Facebook.png" />
+                            </a>
+                        </li>
                     </ul>
                 </div>
-            </div>
+
+                    @*navigationlinks*@
+                <div class=" col-5 align-self-end float-right">
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1 justify-content-end">
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-toggle nav-link text-dark navi" @*data-toggle="dropdown" Not sure what this is, but seems to work without*@ 
+                                    href="https://www.centraliacollegealumni.org/">
+                                    About
+                                </a>
+                            
+                                <ul class="dropdown-menu" 
+                                    role="menu">
+                                    <li><a class="nav-link dropdown-item " href="https://www.centraliacollegealumni.org/faq">FAQ</a></li>
+                                    <li><a class="nav-link dropdown-item " href="https://www.centraliacollegealumni.org/contact">Contact</a></li>
+                                    <li><a class="nav-link dropdown-item " href="https://www.centraliacollegealumni.org/donate">Donate</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle navi" 
+                                href="https://www.centraliacollegealumni.org/news">
+                                News
+                            </a>
+
+                            <ul class="dropdown-menu clearfix" 
+                                role="menu">
+                                <li><a class="nav-link dropdown-item" href="https://www.centraliacollegealumni.org/update">Spotlight Form</a></li>
+                            </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle navi" 
+                                href="https://www.centraliacollegealumni.org/resources">
+                                Resources
+                            </a>
+
+                            <ul class="dropdown-menu clearfix" 
+                                role="menu">
+                                <li><a class="nav-link dropdown-item" href="https://www.centraliacollegealumni.org/zoom-backgrounds">Zoom Backgrounds</a></li>
+                                <li><a class="nav-link dropdown-item" href="https://www.centraliacollegealumni.org/mentoring">Mentoring</a></li>
+                            </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle navi" 
+                                href="https://www.centraliacollegealumni.org/events">
+                                Events
+                            </a>
+
+                            <ul class="dropdown-menu clearfix" 
+                                role="menu">
+                                <li><a class="nav-link dropdown-item" href="https://www.centraliacollegealumni.org/service">Community Service</a></li>
+                            </ul>
+                            </li>
+    @*                        <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AlumniUsers" asp-action="Privacy">Privacy</a>
+                            </li>*@
+                        </ul>
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
+
+        </div>
         </nav>
     </header>
     <div class="container">
@@ -37,11 +111,15 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer text-muted">
         <div class="container">
-            &copy; 2022 - AlumniTrackerSite - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <img src="~/Images/CCF-Logo-yellow.png" />
+            <div class="dashed-Vertical-Line"></div>
+            <div class="dashed-Vertical-Line align-self-end"></div>
         </div>
+        
     </footer>
+   
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

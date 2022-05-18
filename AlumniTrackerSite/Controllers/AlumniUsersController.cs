@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AlumniTrackerSite.Contexts;
 using AlumniTrackerSite.Models;
-
+using static AlumniTrackerSite.Data.Security;
 namespace AlumniTrackerSite
 {
     public class AlumniUsersController : Controller
@@ -20,7 +20,7 @@ namespace AlumniTrackerSite
         }
 
         // GET: AlumniUsers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()//replace this to be search, and then use general input?
         {
               return _context.AlumniUsers != null ? 
                           View(await _context.AlumniUsers.ToListAsync()) :
@@ -28,7 +28,7 @@ namespace AlumniTrackerSite
         }
 
         // GET: AlumniUsers/Details/5
-        public async Task<IActionResult> Details(string? id)
+        public async Task<IActionResult> Details(string? id)// be able to map random numbers to an id per session
         {
             if (id == null || _context.AlumniUsers == null)
             {
@@ -58,6 +58,10 @@ namespace AlumniTrackerSite
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,AdminType,DateModified,Address,City,State,Zip,Phone,IsAdmin")] AlumniUser alumniUser)
         {
+            if (CheckInputs(alumniUser))
+            {
+                return View();
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(alumniUser);
@@ -66,6 +70,32 @@ namespace AlumniTrackerSite
             }
             return View(alumniUser);
         }
+        public static bool CheckInputs(AlumniUser alumniUser)
+        {
+            bool[] goodInput = new bool[11];
+            goodInput[0] = GeneralInput(alumniUser.Name);
+            goodInput[1] = GeneralInput(alumniUser.EmployerName);
+            goodInput[2] = GeneralInput(alumniUser.FieldofEmployment);
+            goodInput[3] = NumericalInput(alumniUser.YearGraduated);
+            goodInput[4] = GeneralInput(alumniUser.Degree);
+            goodInput[5] = GeneralInput(alumniUser.Notes);
+            goodInput[6] = GeneralInput(alumniUser.Address);
+            goodInput[7] = GeneralInput(alumniUser.City);
+            goodInput[8] = GeneralInput(alumniUser.State);
+            goodInput[9] = NumericalInput(alumniUser.Zip);
+            goodInput[10] = PhoneInput(alumniUser.Phone);
+            //PhoneInput(alumniUser.PhoneNumber); //ASP NET Identity Phone Number
+
+
+
+
+            if (!goodInput.Contains(false))
+            {
+                return true;
+            }
+            return false;
+        }
+
 
         // GET: AlumniUsers/Edit/5
         public async Task<IActionResult> Edit(string? id)
