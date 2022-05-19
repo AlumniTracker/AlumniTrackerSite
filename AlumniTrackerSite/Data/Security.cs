@@ -48,7 +48,14 @@ namespace AlumniTrackerSite.Data
         {
             if (GeneralInput(input))
             {
-
+                foreach (char character in input)
+                {
+                    if (!NumberWhiteList.Contains(character))
+                    {
+                        return false;
+                    }
+                }
+                return true;
             }
             return false;
         }
