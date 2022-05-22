@@ -26,6 +26,40 @@ namespace AlumniTrackerSite
                           View(await _context.AlumniUsers.ToListAsync()) :
                           Problem("Entity set 'TrackerContext.AlumniUsers'  is null.");
         }
+        
+        [HttpPost]
+        public IActionResult Index(string SearchPhrase, string type)
+        {
+            if (!GeneralInput(SearchPhrase)) return View(); // Returns complete index, may be bad?
+            if (!GeneralInput(type)) return View();         // Again Returns complete Index 
+            
+            return View(SearchHelper(SearchPhrase, type));
+        }
+        public IEnumerable<AlumniUser> SearchHelper(string Phrase, string Type)
+        {
+            if (Phrase != null)
+            {
+                switch (Type)
+                {
+                    case "studentid": //
+                        return (_context.AlumniUsers
+                            .Where(c => c.StudentId.ToLower() == Phrase.ToLower()));
+
+                    case "name":
+                        return (_context.AlumniUsers
+                            .Where(c => c.Name.ToLower().Contains(Phrase.ToLower())));
+
+                    case "employer":
+                        return (_context.AlumniUsers
+                            .Where(c => c.EmployerName.ToLower().Contains(Phrase.ToLower())));
+
+                    default:
+                        return _context.AlumniUsers.ToList(); // Returns Full List, which is bad
+                }
+            }
+            return _context.AlumniUsers.ToList(); // Returns Full list
+
+        }
 
         // GET: AlumniUsers/Details/5
         public async Task<IActionResult> Details(string? id)// be able to map random numbers to an id per session
@@ -94,6 +128,16 @@ namespace AlumniTrackerSite
                 return true;
             }
             return false;
+        }
+        public string GetName(int id)
+        {
+            //some code to get alumniuser identity user
+            if (id == null || _context.AlumniUsers == null)
+            {
+                return "not found";
+            }
+            return "yes";
+
         }
 
 

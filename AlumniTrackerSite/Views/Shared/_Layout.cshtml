@@ -22,8 +22,7 @@
                     </a>
                 </div>
                         @*sociallinks*@
-
-                <div class="col-1 col align-self-start float-right">
+                        <div class="col-1 col align-self-start ">
                     <ul class="navbar-nav flex-grow-1 justify-content-end">
                         <li>
                             <a class="nav-link" href="https://www.linkedin.com/groups/13706636/">
@@ -43,35 +42,25 @@
                     </ul>
                 </div>
 
+
                     @*navigationlinks*@
                 <div class=" col-5 align-self-end float-right">
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                         <ul class="navbar-nav flex-grow-1 justify-content-end">
-                            <li class="nav-item dropdown">
-                                <a class="dropdown-toggle nav-link text-dark navi" @*data-toggle="dropdown" Not sure what this is, but seems to work without*@ 
+                            <li class="nav-item">
+                                <a class="nav-link text-dark navi" @*data-toggle="dropdown" Not sure what this is, but seems to work without*@ 
                                     href="https://www.centraliacollegealumni.org/">
-                                    About
+                                    Return
                                 </a>
-                            
-                                <ul class="dropdown-menu" 
-                                    role="menu">
-                                    <li><a class="nav-link dropdown-item " href="https://www.centraliacollegealumni.org/faq">FAQ</a></li>
-                                    <li><a class="nav-link dropdown-item " href="https://www.centraliacollegealumni.org/contact">Contact</a></li>
-                                    <li><a class="nav-link dropdown-item " href="https://www.centraliacollegealumni.org/donate">Donate</a></li>
-                                </ul>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link text-dark dropdown-toggle navi" 
-                                href="https://www.centraliacollegealumni.org/news">
-                                News
-                            </a>
-
-                            <ul class="dropdown-menu clearfix" 
-                                role="menu">
-                                <li><a class="nav-link dropdown-item" href="https://www.centraliacollegealumni.org/update">Spotlight Form</a></li>
-                            </ul>
+                            @*These below need to be put into admin and super admin only *@
+                            <li class="nav-item">
+                                <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Index">Search</a>
                             </li>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Create">New Alumni</a>
+                            </li>
+                           @* <li class="nav-item dropdown">
                                 <a class="nav-link text-dark dropdown-toggle navi" 
                                 href="https://www.centraliacollegealumni.org/resources">
                                 Resources
@@ -82,21 +71,9 @@
                                 <li><a class="nav-link dropdown-item" href="https://www.centraliacollegealumni.org/zoom-backgrounds">Zoom Backgrounds</a></li>
                                 <li><a class="nav-link dropdown-item" href="https://www.centraliacollegealumni.org/mentoring">Mentoring</a></li>
                             </ul>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link text-dark dropdown-toggle navi" 
-                                href="https://www.centraliacollegealumni.org/events">
-                                Events
-                            </a>
-
-                            <ul class="dropdown-menu clearfix" 
-                                role="menu">
-                                <li><a class="nav-link dropdown-item" href="https://www.centraliacollegealumni.org/service">Community Service</a></li>
-                            </ul>
-                            </li>
-    @*                        <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="AlumniUsers" asp-action="Privacy">Privacy</a>
                             </li>*@
+
+
                         </ul>
                         <partial name="_LoginPartial" />
                     </div>
@@ -110,7 +87,7 @@
             @RenderBody()
         </main>
     </div>
-
+    <div class="buffer"></div>
     <footer class="footer text-muted">
         <div class="container">
             <img src="~/Images/CCF-Logo-yellow.png" />

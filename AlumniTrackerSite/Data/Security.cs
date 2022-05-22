@@ -25,7 +25,7 @@ namespace AlumniTrackerSite.Data
                 { return false; }
             }
             // Coding Characters
-            input = (string)input.Distinct();
+            //input = (string)input.Distinct();
             if (input.Contains(BlackList))
             { return false; }
 
