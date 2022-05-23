@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using AlumniTrackerSite.Models;
 using AlumniTrackerSite.Data;
+using AlumniTrackerSite.Areas.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace AlumniTrackerSite.Contexts
 {
@@ -19,6 +21,7 @@ namespace AlumniTrackerSite.Contexts
         }
 
         public virtual DbSet<AlumniUser> AlumniUsers { get; set; } = null!;
+        public virtual DbSet<IdentityUser> IdentityUsers { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -69,6 +72,13 @@ namespace AlumniTrackerSite.Contexts
                 entity.Property(e => e.YearGraduated).HasMaxLength(4);
 
                 entity.Property(e => e.Zip).HasMaxLength(10);
+
+                //entity.Property(e => e.Id).HasMaxLength(450);
+                //entity.HasOne(d => d.User.Id)
+                //    .WithOne(d => d.)
+                //    .HasForeignKey(d => d.User.Id)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasContraintName("fk_AlumniUser_AspNetUser");
             });
 
             OnModelCreatingPartial(modelBuilder);

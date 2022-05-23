@@ -15,6 +15,8 @@ public class AlumniIdentityContext : IdentityDbContext<IdentityUser>
     {
     }
 
+    
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

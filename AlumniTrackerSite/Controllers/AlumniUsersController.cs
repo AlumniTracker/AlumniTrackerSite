@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AlumniTrackerSite.Contexts;
 using AlumniTrackerSite.Models;
+using static AlumniTrackerSite.Data.Security;
 
 namespace AlumniTrackerSite
 {
@@ -27,6 +28,39 @@ namespace AlumniTrackerSite
                           Problem("Entity set 'TrackerContext.AlumniUsers'  is null.");
         }
 
+        [HttpPost]
+        public IActionResult Index(string SearchPhrase, string type)
+        {
+            if (!GeneralInput(SearchPhrase)) return View(); // Returns complete index, may be bad?
+            if (!GeneralInput(type)) return View();         // Again Returns complete Index 
+
+            return View(SearchHelper(SearchPhrase, type));
+        }
+        public IEnumerable<AlumniUser> SearchHelper(string Phrase, string Type)
+        {
+            if (Phrase != null)
+            {
+                switch (Type)
+                {
+                    case "studentid": //
+                        return (_context.AlumniUsers
+                            .Where(c => c.StudentId.ToLower() == Phrase.ToLower()));
+
+                    case "name":
+                        return (_context.AlumniUsers
+                            .Where(c => c.Name.ToLower().Contains(Phrase.ToLower())));
+
+                    case "employer":
+                        return (_context.AlumniUsers
+                            .Where(c => c.EmployerName.ToLower().Contains(Phrase.ToLower())));
+
+                    default:
+                        return _context.AlumniUsers.ToList(); // Returns Full List, which is bad
+                }
+            }
+            return _context.AlumniUsers.ToList(); // Returns Full list
+
+        }
         // GET: AlumniUsers/Details/5
         public async Task<IActionResult> Details(string? id)
         {
@@ -67,6 +101,17 @@ namespace AlumniTrackerSite
             return View(alumniUser);
         }
 
+        public string GetName(int id)
+        {
+            //some code to get alumniuser identity user
+            if (id == null || _context.AlumniUsers == null)
+            {
+                return "not found";
+            }
+            return "yes";
+
+        }
+
         // GET: AlumniUsers/Edit/5
         public async Task<IActionResult> Edit(string? id)
         {
@@ -94,6 +139,7 @@ namespace AlumniTrackerSite
             {
                 return NotFound();
             }
+
 
             if (ModelState.IsValid)
             {
