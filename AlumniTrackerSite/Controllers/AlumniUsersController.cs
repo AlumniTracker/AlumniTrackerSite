@@ -60,7 +60,19 @@ namespace AlumniTrackerSite
             return _context.AlumniUsers.ToList(); // Returns Full list
 
         }
-
+        public bool Mapper(int StudentID)
+        {
+            Random random = new Random();
+            string mapID = random.Next(1000000000).ToString(); 
+            HttpContext.Session.SetString(mapID, StudentID.ToString()); 
+            return true;
+        }
+        public int IdGetter(string? mapID)
+        {
+            int StudentID;
+            int.TryParse(HttpContext.Session.GetString(mapID), out StudentID);
+            return StudentID;
+        }
         // GET: AlumniUsers/Details/5
         public async Task<IActionResult> Details(string? id)// be able to map random numbers to an id per session
         {
@@ -75,7 +87,7 @@ namespace AlumniTrackerSite
             {
                 return NotFound();
             }
-
+            
             return View(alumniUser);
         }
 
@@ -120,14 +132,9 @@ namespace AlumniTrackerSite
             goodInput[10] = PhoneInput(alumniUser.Phone);
             //PhoneInput(alumniUser.PhoneNumber); //ASP NET Identity Phone Number
 
+            if (goodInput.Contains(false)) return false;
 
-
-
-            if (!goodInput.Contains(false))
-            {
-                return true;
-            }
-            return false;
+            return true;
         }
         public string GetName(int id)
         {

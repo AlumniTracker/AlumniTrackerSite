@@ -15,7 +15,7 @@ namespace AlumniTrackerSite.Data
         {
             // Null or Empty
             if(input == null || input == "")
-            { return false; }
+            { return true; } // changed from false
             // Is Clearly Injection
             input = input.ToUpper();
             string[] words = input.Split(' ');
@@ -35,7 +35,8 @@ namespace AlumniTrackerSite.Data
         {
             if (GeneralInput(input))
             {
-                //HttpUtility.HtmlEncode(input); // 
+                //HttpUtility.HtmlEncode(input); // This is a note to be used later
+
                 Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
                 Match match = regex.Match(input);
                 if (!match.Success)
