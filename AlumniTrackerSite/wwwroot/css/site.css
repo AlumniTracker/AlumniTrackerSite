@@ -30,11 +30,11 @@ body {
 }
 
     .navi:hover {
-        background-color: #FFC000;
+        background-color: #FECD06;
     }
 
     .navi:active {
-        background-color: #FFC000;
+        background-color: #FECD06;
     }
 .footer {
     position: absolute;
@@ -43,4 +43,11 @@ body {
     white-space: nowrap;
     line-height: 120px;
     background-color: #082E6C;
+}
+.Banner {
+    background-color: #082E6C;
+    color: #FECD06;
+}
+.footer-buffer {
+    margin-bottom:60px;
 }

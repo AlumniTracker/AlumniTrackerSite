@@ -33,6 +33,8 @@ namespace AlumniTrackerSite.Data
         }
         public static bool EmailInput(string input)
         {
+            if (input == null || input == "") return true;
+
             if (GeneralInput(input))
             {
                 //HttpUtility.HtmlEncode(input); // This is a note to be used later
@@ -47,6 +49,7 @@ namespace AlumniTrackerSite.Data
         } 
         public static bool NumericalInput(string input)
         {
+            if (input == null || input == "") return true;
             if (GeneralInput(input))
             {
                 foreach (char character in input)
@@ -62,9 +65,10 @@ namespace AlumniTrackerSite.Data
         }
         public static bool PhoneInput(string input)
         {
+            if (input == null || input == "") return true;
             if (GeneralInput(input))
             {
-
+                return true;
             }
             return false;
         }

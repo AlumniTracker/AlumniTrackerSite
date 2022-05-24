@@ -104,12 +104,13 @@ namespace AlumniTrackerSite
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,AdminType,DateModified,Address,City,State,Zip,Phone,IsAdmin")] AlumniUser alumniUser)
         {
-            if (CheckInputs(alumniUser))
+            if (!CheckInputs(alumniUser))
             {
-                return View();
+                return View(); // CHANGE TO ERROR
             }
             if (ModelState.IsValid)
             {
+                alumniUser.DateModified = DateTime.Now;
                 _context.Add(alumniUser);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -118,18 +119,19 @@ namespace AlumniTrackerSite
         }
         public static bool CheckInputs(AlumniUser alumniUser)
         {
-            bool[] goodInput = new bool[11];
-            goodInput[0] = GeneralInput(alumniUser.Name);
-            goodInput[1] = GeneralInput(alumniUser.EmployerName);
-            goodInput[2] = GeneralInput(alumniUser.FieldofEmployment);
-            goodInput[3] = NumericalInput(alumniUser.YearGraduated);
-            goodInput[4] = GeneralInput(alumniUser.Degree);
-            goodInput[5] = GeneralInput(alumniUser.Notes);
-            goodInput[6] = GeneralInput(alumniUser.Address);
-            goodInput[7] = GeneralInput(alumniUser.City);
-            goodInput[8] = GeneralInput(alumniUser.State);
-            goodInput[9] = NumericalInput(alumniUser.Zip);
-            goodInput[10] = PhoneInput(alumniUser.Phone);
+            bool[] goodInput = new bool[12];
+            goodInput[0] = NumericalInput(alumniUser.StudentId);
+            goodInput[1] = GeneralInput(alumniUser.Name);
+            goodInput[2] = GeneralInput(alumniUser.EmployerName);
+            goodInput[3] = GeneralInput(alumniUser.FieldofEmployment);
+            goodInput[4] = NumericalInput(alumniUser.YearGraduated);
+            goodInput[5] = GeneralInput(alumniUser.Degree);
+            goodInput[6] = GeneralInput(alumniUser.Notes);
+            goodInput[7] = GeneralInput(alumniUser.Address);
+            goodInput[8] = GeneralInput(alumniUser.City);
+            goodInput[9] = GeneralInput(alumniUser.State);
+            goodInput[10] = NumericalInput(alumniUser.Zip);
+            goodInput[11] = PhoneInput(alumniUser.Phone);
             //PhoneInput(alumniUser.PhoneNumber); //ASP NET Identity Phone Number
 
             if (goodInput.Contains(false)) return false;
