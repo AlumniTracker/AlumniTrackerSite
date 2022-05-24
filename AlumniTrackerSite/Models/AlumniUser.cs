@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AlumniTrackerSite.Models
 {
@@ -19,7 +20,6 @@ namespace AlumniTrackerSite.Models
         public string? Degree { get; set; }
         [MaxLength(500)]
         public string? Notes { get; set; }
-        public string? AdminType { get; set; }
         public DateTime? DateModified { get; set; }
         [MaxLength(100)]
         public string? Address { get; set; }
