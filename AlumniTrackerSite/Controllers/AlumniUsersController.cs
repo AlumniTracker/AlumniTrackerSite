@@ -183,6 +183,7 @@ namespace AlumniTrackerSite
             {
                 try
                 {
+                    alumniUser.DateModified = DateTime.Now;
                     _context.Update(alumniUser);
                     await _context.SaveChangesAsync();
                 }
