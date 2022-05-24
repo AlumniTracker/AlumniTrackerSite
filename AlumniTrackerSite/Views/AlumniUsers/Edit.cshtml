@@ -13,7 +13,6 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<input type="hidden" asp-for="UserId" />*@
             <div class="form-group">
                 <label asp-for="StudentId" class="control-label"></label>
                 <input asp-for="StudentId" class="form-control" />
@@ -50,11 +49,6 @@
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AdminType" class="control-label"></label>
-                <input asp-for="AdminType" class="form-control" />
-                <span asp-validation-for="AdminType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="DateModified" class="control-label"></label>
                 <input asp-for="DateModified" class="form-control" />
                 <span asp-validation-for="DateModified" class="text-danger"></span>
@@ -84,10 +78,11 @@
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsAdmin" /> @Html.DisplayNameFor(model => model.IsAdmin)
-                </label>
+            <input type="hidden" asp-for="AlumniId" />
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <select asp-for="Id" class="form-control" asp-items="ViewBag.Id"></select>
+                <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
