@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AlumniTrackerSite.Data;
 
+
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AlumniIdentityContextConnection") ?? throw new InvalidOperationException("Connection string 'AlumniIdentityContextConnection' not found.");
 
