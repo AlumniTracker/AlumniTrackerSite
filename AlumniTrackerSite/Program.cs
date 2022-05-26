@@ -5,7 +5,7 @@ using AlumniTrackerSite.Data;
 
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("AlumniIdentityContextConnection") ?? throw new InvalidOperationException("Connection string 'AlumniIdentityContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("Conn") ?? throw new InvalidOperationException("Connection string 'Conn' not found.");
 
 builder.Services.AddDbContext<AlumniIdentityContext>(options =>
     options.UseSqlServer(connectionString));;

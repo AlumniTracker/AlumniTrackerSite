@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,6 +7,7 @@ namespace AlumniTrackerSite.Models
 {
     public partial class AlumniUser
     {
+        [PersonalData]
         [MaxLength(10)]
         public string StudentId { get; set; } = null!;
         [MaxLength(50)]
