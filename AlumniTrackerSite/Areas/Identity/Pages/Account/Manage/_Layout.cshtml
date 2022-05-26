@@ -1,4 +1,4 @@
-﻿@{
+@{
     if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
     {
         Layout = (string)parentLayout;
@@ -9,8 +9,8 @@
     }
 }
 
-<h1>This is the _Layout page from Manage</h1>
-
+<h1>Manage your account</h1>
+@*<partial name="_searchPartial" />*@
 <div>
     <h2>Change your account settings</h2>
     <hr />

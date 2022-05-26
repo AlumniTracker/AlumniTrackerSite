@@ -5,7 +5,7 @@ namespace AlumniTrackerSite.Data
 {
     public static class Security
     {
-        private static string BlackList =
+        private static string BlackList = 
             @"<>/\'{};:`&|";
         private static string[] BlackListWords = { "DATABASE", "1:1", "TABLE", "TRUNCATE", "", "SELECT" };
         private static string NumberWhiteList = "0123456789";
@@ -14,14 +14,14 @@ namespace AlumniTrackerSite.Data
         public static bool GeneralInput(string input)
         {
             // Null or Empty
-            if (input == null || input == "")
-            { return false; }
+            if(input == null || input == "")
+            { return true; } // changed from false
             // Is Clearly Injection
             input = input.ToUpper();
             string[] words = input.Split(' ');
             foreach (string word in words)
             {
-                if (BlackListWords.Contains(word))
+                if(BlackListWords.Contains(word))
                 { return false; }
             }
             // Coding Characters
@@ -33,9 +33,12 @@ namespace AlumniTrackerSite.Data
         }
         public static bool EmailInput(string input)
         {
+            if (input == null || input == "") return true;
+
             if (GeneralInput(input))
             {
-                //HttpUtility.HtmlEncode(input); // 
+                //HttpUtility.HtmlEncode(input); // This is a note to be used later
+
                 Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
                 Match match = regex.Match(input);
                 if (!match.Success)
@@ -43,9 +46,10 @@ namespace AlumniTrackerSite.Data
                 return true;
             }
             return false;
-        }
+        } 
         public static bool NumericalInput(string input)
         {
+            if (input == null || input == "") return true;
             if (GeneralInput(input))
             {
                 foreach (char character in input)
@@ -61,12 +65,13 @@ namespace AlumniTrackerSite.Data
         }
         public static bool PhoneInput(string input)
         {
+            if (input == null || input == "") return true;
             if (GeneralInput(input))
             {
-
+                return true;
             }
             return false;
         }
-
+        
     }
 }

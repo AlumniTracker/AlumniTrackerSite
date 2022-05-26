@@ -16,3 +16,38 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.dashed-Vertical-Line {
+    border-right: dashed 1px hsla(0,0%,100%,.5);
+    border-left: 1px dashed rgba(0,0,0,.35);
+    width: 5 !important;
+    min-width: 5 !important;
+}
+
+.navi {
+    color: black;
+    font: bold 14px calibri;
+}
+
+    .navi:hover {
+        background-color: #FECD06;
+    }
+
+    .navi:active {
+        background-color: #FECD06;
+    }
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 120px;
+    background-color: #082E6C;
+}
+.Banner {
+    background-color: #082E6C;
+    color: #FECD06;
+}
+.footer-buffer {
+    margin-bottom:60px;
+}
