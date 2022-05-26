@@ -10,6 +10,6 @@ namespace AlumniTrackerSite.Models
         public string AdminName { get; set; } = null!;
         public string? Id { get; set; }
 
-        public virtual AspNetUser? IdNavigation { get; set; }
+        public virtual AspNetUsers? IdNavigation { get; set; }
     }
 }

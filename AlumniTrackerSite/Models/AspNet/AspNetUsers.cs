@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace AlumniTrackerSite.Models
 {
-    public partial class AspNetUser
+    public partial class AspNetUsers : IdentityUser
     {
-        public AspNetUser()
+        public AspNetUsers()
         {
             AdminUsers = new HashSet<AdminUser>();
             AlumniUsers = new HashSet<AlumniUser>();

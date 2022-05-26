@@ -3,19 +3,22 @@ using AlumniTrackerSite.Models;
 
 namespace AlumniTrackerSite.Services
 {
-    public class DataService :IDataService
+    public class DataService : IDataService
     {
         private readonly TrackerContext _context;
+        private readonly AlumniUser _user;
 
         public DataService(TrackerContext context)
         {
             _context = context;
         }
 
-        //public List<AlumniUser> GetUser(string id)
-        //{
-        //    var user = _context.AlumniUser
-        //        .Where(x => x.Id == id);
-        //}
+        public AlumniUser GetUser(string id)
+        {
+            var user = (AlumniUser)_context.AlumniUsers
+                .Where(x => x.Id == id);
+            
+            return user;
+        }
     }
 }

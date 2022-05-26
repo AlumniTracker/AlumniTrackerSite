@@ -120,13 +120,13 @@ namespace AlumniTrackerSite.Contexts
             //        .HasForeignKey(d => d.RoleId);
             //});
 
-            //modelBuilder.Entity<AspNetUser>(entity =>
+            //modelBuilder.Entity<AspNetUsers>(entity =>
             //{
             //    entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
 
             //    entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
             //        .IsUnique()
-            //        .HasFilter("([NormalizedUserName] IS NOT NULL)");
+            //        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
             //    entity.Property(e => e.Email).HasMaxLength(256);
 
@@ -141,7 +141,7 @@ namespace AlumniTrackerSite.Contexts
             //        .UsingEntity<Dictionary<string, object>>(
             //            "AspNetUserRole",
             //            l => l.HasOne<AspNetRole>().WithMany().HasForeignKey("RoleId"),
-            //            r => r.HasOne<AspNetUser>().WithMany().HasForeignKey("UserId"),
+            //            r => r.HasOne<AspNetUsers>().WithMany().HasForeignKey("UserId"),
             //            j =>
             //            {
             //                j.HasKey("UserId", "RoleId");

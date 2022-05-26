@@ -14,8 +14,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<AlumniIdentityContext>();;
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<TrackerContext>();
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache(); //states that this should not be used with multiple servers, currently a non issue
 

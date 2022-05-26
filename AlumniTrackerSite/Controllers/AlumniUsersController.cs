@@ -8,22 +8,27 @@ using Microsoft.EntityFrameworkCore;
 using AlumniTrackerSite.Contexts;
 using AlumniTrackerSite.Models;
 using static AlumniTrackerSite.Data.Security;
+using Microsoft.AspNetCore.Identity;
+
 namespace AlumniTrackerSite
 {
     public class AlumniUsersController : Controller
     {
         private readonly TrackerContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public AlumniUsersController(TrackerContext context)
+        public AlumniUsersController(TrackerContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: AlumniUsers
         public async Task<IActionResult> Index()//replace this to be search, and then use general input?
         {
-            var trackerContext = _context.AlumniUsers.Include(a => a.IdNavigation);
-            return View(await trackerContext.ToListAsync());
+              return _context.AlumniUsers != null ? 
+                          View(await _context.AlumniUsers.ToListAsync()) :
+                          Problem("Entity set 'TrackerContext.AlumniUsers'  is null.");
         }
         
         [HttpPost]
@@ -82,8 +87,7 @@ namespace AlumniTrackerSite
             }
 
             var alumniUser = await _context.AlumniUsers
-                .Include(a => a.IdNavigation)
-                .FirstOrDefaultAsync(m => m.AlumniId == id);
+                .FirstOrDefaultAsync(m => m.StudentId == id);
             if (alumniUser == null)
             {
                 return NotFound();
@@ -95,7 +99,6 @@ namespace AlumniTrackerSite
         // GET: AlumniUsers/Create
         public IActionResult Create()
         {
-            ViewData["Id"] = new SelectList(_context.Set<AspNetUser>(), "Id", "Id");
             return View();
         }
 
@@ -117,7 +120,6 @@ namespace AlumniTrackerSite
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Id"] = new SelectList(_context.Set<AspNetUser>(), "Id", "Id", alumniUser.Id);
             return View(alumniUser);
         }
         public static bool CheckInputs(AlumniUser alumniUser)
@@ -154,7 +156,7 @@ namespace AlumniTrackerSite
 
 
         // GET: AlumniUsers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null || _context.AlumniUsers == null)
             {
@@ -166,7 +168,6 @@ namespace AlumniTrackerSite
             {
                 return NotFound();
             }
-            ViewData["Id"] = new SelectList(_context.Set<AspNetUser>(), "Id", "Id", alumniUser.Id);
             return View(alumniUser);
         }
 
@@ -175,12 +176,13 @@ namespace AlumniTrackerSite
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,DateModified,Address,City,State,Zip,Phone,AlumniId,Id")] AlumniUser alumniUser)
+        public async Task<IActionResult> Edit(string id, [Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,DateModified,Address,City,State,Zip,Phone,AlumniId,Id")] AlumniUser alumniUser)
         {
-            if (id != alumniUser.AlumniId)
+            if (id != alumniUser.StudentId)
             {
                 return NotFound();
             }
+
 
             if (ModelState.IsValid)
             {
@@ -192,7 +194,7 @@ namespace AlumniTrackerSite
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AlumniUserExists(alumniUser.AlumniId))
+                    if (!AlumniUserExists(alumniUser.StudentId))
                     {
                         return NotFound();
                     }
@@ -203,12 +205,11 @@ namespace AlumniTrackerSite
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Id"] = new SelectList(_context.Set<AspNetUser>(), "Id", "Id", alumniUser.Id);
             return View(alumniUser);
         }
 
         // GET: AlumniUsers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null || _context.AlumniUsers == null)
             {
@@ -216,8 +217,7 @@ namespace AlumniTrackerSite
             }
 
             var alumniUser = await _context.AlumniUsers
-                .Include(a => a.IdNavigation)
-                .FirstOrDefaultAsync(m => m.AlumniId == id);
+                .FirstOrDefaultAsync(m => m.StudentId == id);
             if (alumniUser == null)
             {
                 return NotFound();
@@ -229,7 +229,7 @@ namespace AlumniTrackerSite
         // POST: AlumniUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.AlumniUsers == null)
             {
@@ -245,9 +245,9 @@ namespace AlumniTrackerSite
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AlumniUserExists(int id)
+        private bool AlumniUserExists(string id)
         {
-          return (_context.AlumniUsers?.Any(e => e.AlumniId == id)).GetValueOrDefault();
+          return (_context.AlumniUsers?.Any(e => e.StudentId == id)).GetValueOrDefault();
         }
     }
 }
