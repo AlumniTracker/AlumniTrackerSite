@@ -80,14 +80,13 @@ namespace AlumniTrackerSite
         // GET: AlumniUsers/Details/5
         public async Task<IActionResult> Details(string? idString)// be able to map random numbers to an id per session
         {
-            int id = int.Parse(idString);
-            if (id == null || _context.AlumniUsers == null)
+            if (idString == null || _context.AlumniUsers == null)
             {
                 return NotFound();
             }
 
             var alumniUser = await _context.AlumniUsers
-                .FirstOrDefaultAsync(m => m.StudentId == id);
+                .FirstOrDefaultAsync(m => m.StudentId.Equals(idString));
             if (alumniUser == null)
             {
                 return NotFound();
