@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlumniTrackerSite.Migrations.Tracker
 {
     [DbContext(typeof(TrackerContext))]
-    [Migration("20220524190643_BigChange")]
-    partial class BigChange
+    [Migration("20220526191724_AddedtheS")]
+    partial class AddedtheS
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -171,58 +171,6 @@ namespace AlumniTrackerSite.Migrations.Tracker
                     b.ToTable("AspNetRoleClaim");
                 });
 
-            modelBuilder.Entity("AlumniTrackerSite.Models.AspNetUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AspNetUsers");
-                });
-
             modelBuilder.Entity("AlumniTrackerSite.Models.AspNetUserClaim", b =>
                 {
                     b.Property<int>("Id")
@@ -293,7 +241,7 @@ namespace AlumniTrackerSite.Migrations.Tracker
                     b.ToTable("AspNetUserToken");
                 });
 
-            modelBuilder.Entity("AspNetRoleAspNetUser", b =>
+            modelBuilder.Entity("AspNetRoleAspNetUsers", b =>
                 {
                     b.Property<string>("RolesId")
                         .HasColumnType("nvarchar(450)");
@@ -305,7 +253,7 @@ namespace AlumniTrackerSite.Migrations.Tracker
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("AspNetRoleAspNetUser");
+                    b.ToTable("AspNetRoleAspNetUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -372,6 +320,10 @@ namespace AlumniTrackerSite.Migrations.Tracker
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -423,6 +375,8 @@ namespace AlumniTrackerSite.Migrations.Tracker
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -511,6 +465,13 @@ namespace AlumniTrackerSite.Migrations.Tracker
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("AlumniTrackerSite.Models.AspNetUsers", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.HasDiscriminator().HasValue("AspNetUsers");
+                });
+
             modelBuilder.Entity("AlumniTrackerSite.Models.AdminUser", b =>
                 {
                     b.HasOne("AlumniTrackerSite.Models.AspNetUsers", "IdNavigation")
@@ -575,7 +536,7 @@ namespace AlumniTrackerSite.Migrations.Tracker
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("AspNetRoleAspNetUser", b =>
+            modelBuilder.Entity("AspNetRoleAspNetUsers", b =>
                 {
                     b.HasOne("AlumniTrackerSite.Models.AspNetRole", null)
                         .WithMany()

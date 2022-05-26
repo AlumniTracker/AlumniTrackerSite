@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace AlumniTrackerSite.Models
 {
     public partial class AlumniUser
     {
+        
         public string StudentId { get; set; } = null!;
+        
         public string Name { get; set; } = null!;
         public string? EmployerName { get; set; }
         public string? FieldofEmployment { get; set; }
@@ -21,6 +24,6 @@ namespace AlumniTrackerSite.Models
         public int AlumniId { get; set; }
         public string? Id { get; set; }
 
-        public virtual AspNetUser? IdNavigation { get; set; }
+        public virtual AspNetUsers? IdNavigation { get; set; }
     }
 }

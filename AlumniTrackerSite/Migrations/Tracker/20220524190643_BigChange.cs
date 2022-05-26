@@ -61,7 +61,7 @@ namespace AlumniTrackerSite.Migrations.Tracker
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUser",
+                name: "AspNetUsers",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -82,7 +82,7 @@ namespace AlumniTrackerSite.Migrations.Tracker
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUser", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -122,7 +122,7 @@ namespace AlumniTrackerSite.Migrations.Tracker
                     table.ForeignKey(
                         name: "FK_AdminUser_AspNetUsers1",
                         column: x => x.Id,
-                        principalTable: "AspNetUser",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
 
@@ -145,7 +145,7 @@ namespace AlumniTrackerSite.Migrations.Tracker
                     table.ForeignKey(
                         name: "FK_AspNetRoleAspNetUser_AspNetUser_UsersId",
                         column: x => x.UsersId,
-                        principalTable: "AspNetUser",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -166,7 +166,7 @@ namespace AlumniTrackerSite.Migrations.Tracker
                     table.ForeignKey(
                         name: "FK_AspNetUserClaim_AspNetUser_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUser",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -186,7 +186,7 @@ namespace AlumniTrackerSite.Migrations.Tracker
                     table.ForeignKey(
                         name: "FK_AspNetUserLogin_AspNetUser_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUser",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -206,7 +206,7 @@ namespace AlumniTrackerSite.Migrations.Tracker
                     table.ForeignKey(
                         name: "FK_AspNetUserToken_AspNetUser_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUser",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -245,7 +245,7 @@ namespace AlumniTrackerSite.Migrations.Tracker
                 name: "FK_AlumniUser_AspNetUsers1",
                 table: "AlumniUser",
                 column: "Id",
-                principalTable: "AspNetUser",
+                principalTable: "AspNetUsers",
                 principalColumn: "Id");
         }
 
@@ -277,7 +277,7 @@ namespace AlumniTrackerSite.Migrations.Tracker
                 name: "AspNetRole");
 
             migrationBuilder.DropTable(
-                name: "AspNetUser");
+                name: "AspNetUsers");
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK__AlumniUs__1788CC4CE62D00D5",

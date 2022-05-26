@@ -14,8 +14,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<AlumniIdentityContext>();;
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<TrackerContext>();
+builder.Services.AddControllersWithViews();
 
 
 //builder.Services.AddTransient<IDataService, DataService>();

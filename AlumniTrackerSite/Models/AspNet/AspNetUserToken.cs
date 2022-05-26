@@ -10,6 +10,6 @@ namespace AlumniTrackerSite.Models
         public string Name { get; set; } = null!;
         public string? Value { get; set; }
 
-        public virtual AspNetUser User { get; set; } = null!;
+        public virtual AspNetUsers User { get; set; } = null!;
     }
 }

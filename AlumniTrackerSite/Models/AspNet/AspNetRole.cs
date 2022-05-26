@@ -8,7 +8,7 @@ namespace AlumniTrackerSite.Models
         public AspNetRole()
         {
             AspNetRoleClaims = new HashSet<AspNetRoleClaim>();
-            Users = new HashSet<AspNetUser>();
+            Users = new HashSet<AspNetUsers>();
         }
 
         public string Id { get; set; } = null!;
@@ -18,6 +18,6 @@ namespace AlumniTrackerSite.Models
 
         public virtual ICollection<AspNetRoleClaim> AspNetRoleClaims { get; set; }
 
-        public virtual ICollection<AspNetUser> Users { get; set; }
+        public virtual ICollection<AspNetUsers> Users { get; set; }
     }
 }
