@@ -108,13 +108,14 @@ namespace AlumniTrackerSite
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,DateModified,Address,City,State,Zip,Phone,AlumniId,Id")] AlumniUser alumniUser)
         {
-            if (!CheckInputs(alumniUser))
-            {
-                return View(); // CHANGE TO ERROR
-            }
+            //if (!CheckInputs(alumniUser))
+            //{
+            //    return View(); // CHANGE TO ERROR
+            //}
             if (ModelState.IsValid)
             {
                 alumniUser.DateModified = DateTime.Now;
+                alumniUser.Id = _userManager.GetUserId(User);
                 _context.Add(alumniUser);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
