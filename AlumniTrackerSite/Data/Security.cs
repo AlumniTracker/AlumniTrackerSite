@@ -5,9 +5,9 @@ namespace AlumniTrackerSite.Data
 {
     public static class Security
     {
-        private static string BlackList = 
-            @"<>/\'{};:`&|";
-        private static string[] BlackListWords = { "DATABASE", "1:1", "TABLE", "TRUNCATE", "", "SELECT" };
+        private static string BlackList =
+            @"<>/\'{};:`&|^";
+        private static string[] BlackListWords = { "DATABASE", "1:1", "1=1", "TABLE", "TRUNCATE", "", "SELECT", "UNION" };
         private static string NumberWhiteList = "0123456789";
 
 
@@ -59,15 +59,6 @@ namespace AlumniTrackerSite.Data
                         return false;
                     }
                 }
-                return true;
-            }
-            return false;
-        }
-        public static bool PhoneInput(string input)
-        {
-            if (input == null || input == "") return true;
-            if (GeneralInput(input))
-            {
                 return true;
             }
             return false;
