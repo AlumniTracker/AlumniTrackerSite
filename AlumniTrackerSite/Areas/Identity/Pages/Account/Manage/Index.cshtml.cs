@@ -6,6 +6,9 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using AlumniTrackerSite.Contexts;
+using AlumniTrackerSite.Models;
+using AlumniTrackerSite.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,15 +19,36 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly TrackerContext _context;
+        public AlumniUser MyUser { get; set; }
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            TrackerContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
+        public AlumniUser alumniUser { get
+            {
+                string id = _signInManager.UserManager.GetUserId(User);
+                IEnumerable<AlumniUser> alum = _context.AlumniUsers.Where(x => x.Id.Equals(id));
+                return alum.FirstOrDefault();
+            } }
+        public string Name
+        {
+            get {
+                // returns the Id field of the logged in user
+                string signedInUser = _signInManager.UserManager.GetUserId(User);
 
+                AlumniUser IdFromAlumniUserTable = (AlumniUser)_context.AlumniUsers.Where(c => c.Id == signedInUser).FirstOrDefault();
+                return IdFromAlumniUserTable.Name;
+                
+                }
+            
+        }
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -51,6 +75,10 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public class InputModel
         {
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Full name")]
+            public string Name { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -80,7 +108,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
+            
             await LoadAsync(user);
             return Page();
         }

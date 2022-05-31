@@ -6,16 +6,15 @@
 }
 
 <h1>Index</h1>
-
+<partial name="_searchPartial" />
 <p>
     <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
-            <th>
+@*            <th>
                 @Html.DisplayNameFor(model => model.StudentId)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -33,9 +32,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Notes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AdminType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DateModified)
@@ -56,7 +52,7 @@
                 @Html.DisplayNameFor(model => model.Phone)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsAdmin)
+                @Html.DisplayNameFor(model => model.IdNavigation)
             </th>
             <th></th>
         </tr>
@@ -64,9 +60,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+@*            <td>
                 @Html.DisplayFor(modelItem => item.StudentId)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -86,9 +82,6 @@
                 @Html.DisplayFor(modelItem => item.Notes)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AdminType)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.DateModified)
             </td>
             <td>
@@ -106,12 +99,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Phone)
             </td>
+@*            <td>
+                @Html.DisplayFor(modelItem => item.IdNavigation.Id)
+            </td>*@
             <td>
-                @Html.DisplayFor(modelItem => item.IsAdmin)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.StudentId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.StudentId">Details</a> |
+@*                <a asp-action="Edit" asp-route-id="@item.StudentId">Edit</a> |*@
+@*                <a asp-action="Details" asp-route-id="@item.StudentId">Details</a> |*@
+
+
                 <a asp-action="Delete" asp-route-id="@item.StudentId">Delete</a>
             </td>
         </tr>
