@@ -132,27 +132,7 @@ namespace AlumniTrackerSite
             }
             return View(alumniUser);
         }
-        public static bool CheckInputs(AlumniUser alumniUser)
-        {
-            bool[] goodInput = new bool[12];
-            goodInput[0] = NumericalInput(alumniUser.StudentId);
-            goodInput[1] = GeneralInput(alumniUser.Name);
-            goodInput[2] = GeneralInput(alumniUser.EmployerName);
-            goodInput[3] = GeneralInput(alumniUser.FieldofEmployment);
-            goodInput[4] = NumericalInput(alumniUser.YearGraduated);
-            goodInput[5] = GeneralInput(alumniUser.Degree);
-            goodInput[6] = GeneralInput(alumniUser.Notes);
-            goodInput[7] = GeneralInput(alumniUser.Address);
-            goodInput[8] = GeneralInput(alumniUser.City);
-            goodInput[9] = GeneralInput(alumniUser.State);
-            goodInput[10] = NumericalInput(alumniUser.Zip);
-            goodInput[11] = GeneralInput(alumniUser.Phone);
-            //PhoneInput(alumniUser.PhoneNumber); //ASP NET Identity Phone Number
 
-            if (goodInput.Contains(false)) return false;
-
-            return true;
-        }
         public string GetName(int id)
         {
             //some code to get alumniuser identity user
