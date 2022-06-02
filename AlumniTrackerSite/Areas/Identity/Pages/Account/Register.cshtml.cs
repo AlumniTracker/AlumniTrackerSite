@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using AlumniTrackerSite.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -44,6 +45,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
         }
+        public AlumniUser AlumniUser { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -97,6 +99,9 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            //[Required]
+            //[Display(AlumniUser.StudentId = "Student ID")]
+            //public string StudentId { get; set; }
         }
 
 
@@ -113,6 +118,10 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+        //  This is where we find the Identity Info so it can be used for AlumniUser Create
+                string UserID = _userManager.GetUserId(User);
+        // still working on the next line
+                AlumniUser AUser = CreateAlumni(UserID);
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -153,7 +162,11 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
-
+        private AlumniUser CreateAlumni(string UserId)
+        {
+            // still working on how to accomplish this
+            return AlumniUser;
+        }
         private IdentityUser CreateUser()
         {
             try

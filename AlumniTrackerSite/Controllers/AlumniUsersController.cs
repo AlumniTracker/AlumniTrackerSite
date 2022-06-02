@@ -179,7 +179,7 @@ namespace AlumniTrackerSite
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,DateModified,Address,City,State,Zip,Phone,AlumniId,Id")] AlumniUser alumniUser)
         {
-            if (id != alumniUser.StudentId)
+            if (id != alumniUser.Id)
             {
                 return NotFound();
             }
