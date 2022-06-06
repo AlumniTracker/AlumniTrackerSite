@@ -12,18 +12,23 @@ namespace AlumniTrackerSite.Models
 
         [PersonalData]
         [MaxLength(10)]
+        [Display(Name ="Student ID")]
         public string StudentId { get; set; } = null!;
         [PersonalData]
         [MaxLength(50)]
+        [Display(Name ="This is in fact, your name")]
         public string Name { get; set; } = null!;
         [PersonalData]
         [MaxLength(100)]
+        [Display(Name="Employer")]
         public string? EmployerName { get; set; }
         [PersonalData]
         [MaxLength(50)]
+        [Display(Name ="Field of Employment")]
         public string? FieldofEmployment { get; set; }
         [PersonalData]
         [MaxLength(4)]
+        [Display(Name ="Year Graduated")]
         public string? YearGraduated { get; set; }
         [PersonalData]
         [MaxLength(100)]
@@ -45,8 +50,8 @@ namespace AlumniTrackerSite.Models
         [MaxLength(10)]
         public string? Zip { get; set; }
         [PersonalData]
-        [MaxLength(10)]
         [Phone]
+        [MaxLength(15)]
         public string? Phone { get; set; }
         public string? Id { get; set; }
 
