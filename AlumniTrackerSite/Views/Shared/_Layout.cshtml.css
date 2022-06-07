@@ -3,14 +3,28 @@
     text-align: center;
     word-break: break-all;
 }
-
+.no-buffer {
+    margin:0px;
+    padding:0px;
+    
+}
+.nav-link {
+    display:inline-block;
+}
+.navbar-nav {
+    display: inline-block;
+    flex-direction:row;
+}
+nav-item {
+    display:inline-block;
+}
 /*.dashed-Vertical-Line {
     border-right: dashed 1px hsla(0,0%,100%,.5);
     border-left: 1px dashed rgba(0,0,0,.35);
     width: 0px !important;
     min-width: 0px !important;
 }*/
-.invis {
+    .invis {
     color: rgba(255,0,0,0.5)
 }
 .footerText {

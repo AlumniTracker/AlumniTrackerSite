@@ -12,7 +12,6 @@
 <body>
 
     <header class="@*col-md-12 mx-auto*@">
-        @*<nav class="navbar ">*@
         <div class="col-md-8 @*mx-auto*@ @*justify-content-md-center*@ offset-md-3">
             <div class="row">
                 @*    <div class="row">
@@ -26,7 +25,7 @@
                 @*  <div class="row">
 
                     </div>*@
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="@*float-right*@">
                         <a class="" href="https://www.linkedin.com/groups/13706636/">
                             <img src="~/Images/LinkedIn.png" />
@@ -38,43 +37,51 @@
                             <img src="~/Images/Facebook.png" />
                         </a>
                     </div>
-                    <div class="col-md-6 invis @*float-right*@ justify-content-sm-end">spacing</div>
-                    <div class="col-md-6 container navbar-collapse @*collapse*@ @*d-sm-inline-flex*@ @*float-right*@">
-                        <ul class="navbar-nav @*flex-grow-1 justify-content-end*@ @*inline*@ ">
-                            @*These below need to be put into admin and super admin only *@
-                            <li class="nav-item">
-                                <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Index">Search</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Create">New Alumni</a>
-                            </li>
+                    <div class="col-md-12 invis @*float-right*@ justify-content-sm-end">spacing</div>
+                    <div class="col-md-12  @*navbar-collapse*@ @*collapse*@ d-sm-inline @*float-right*@">
+                        <div class="navbar-collapse collapse d-sm-inline  @*float-right*@">
+                                                    <nav class="navbar ">
+                                                    @*<div class="navbar-collapse container-fluid collapse d-sm-inline-flex @*float-right no-buffer">*@
+                            <ul class="nav">
+                                @*These below need to be put into admin and super admin only *@
+                                <li class="nav-item ">
+                                    <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Index">Search</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Create">New Alumni</a>
+                                </li>
 
-@*                            <li class="nav-item">
-                                <a class="nav-link text-dark navi"
-                                   href="https://www.centraliacollegealumni.org/">
-                                    Return
-                                </a>
-                            </li>*@
-                            @* <li class="nav-item dropdown">
-                                <a class="nav-link text-dark dropdown-toggle navi"
-                                href="https://www.centraliacollegealumni.org/resources">
-                                Resources
-                                </a>
-
-                                <ul class="dropdown-menu clearfix"
-                                role="menu">
-                                <li><a class="nav-link dropdown-item" href="https://www.centraliacollegealumni.org/zoom-backgrounds">Zoom Backgrounds</a></li>
-                                <li><a class="nav-link dropdown-item" href="https://www.centraliacollegealumni.org/mentoring">Mentoring</a></li>
-                                </ul>
+    @*                            <li class="nav-item">
+                                    <a class="nav-link text-dark navi"
+                                       href="https://www.centraliacollegealumni.org/">
+                                        Return
+                                    </a>
                                 </li>*@
-                        </ul>
+                                @* <li class="nav-item dropdown">
+                                    <a class="nav-link text-dark dropdown-toggle navi"
+                                    href="https://www.centraliacollegealumni.org/resources">
+                                    Resources
+                                    </a>
+
+                                    <ul class="dropdown-menu clearfix"
+                                    role="menu">
+                                    <li><a class="nav-link dropdown-item" href="https://www.centraliacollegealumni.org/zoom-backgrounds">Zoom Backgrounds</a></li>
+                                    <li><a class="nav-link dropdown-item" href="https://www.centraliacollegealumni.org/mentoring">Mentoring</a></li>
+                                    </ul>
+                                    </li>*@
+                            </ul>
+                            
+                        @*</div>*@
+                        </nav>
+                            
+                        </div>
+
+
                     </div>
 
                     <div class="col-md-6">
-                        <div class="navbar-collapse collapse d-sm-inline-flex  @*float-right*@">
-
-                            <partial name="_LoginPartial" />
-                        </div>
+                        
+                        <partial name="_LoginPartial" />
                     </div>
                 </div>
 
