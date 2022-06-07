@@ -60,7 +60,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account.Manage
         public string Username { get; set; }
 
         /// <summary>
-        ///     Look WHAT I CAN DO!!!!!!!
+        ///     Look WHAT I CAN DO!!!!!!! But alas, I was wrong
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
@@ -138,6 +138,46 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account.Manage
                 {
                     updatedUser.Name = Request.Form["alumniUser.Name"];
                 }
+            if (!Request.Form["alumniUser.Degree"].Equals(updatedUser.Degree))
+            {
+                updatedUser.Degree = Request.Form["alumniUser.Degree"];
+            }
+            if (!Request.Form["alumniUser.YearGraduated"].Equals(updatedUser.YearGraduated))
+            {
+                updatedUser.YearGraduated = Request.Form["alumniUser.YearGraduated"];
+            }
+            if (!Request.Form["alumniUser.Address"].Equals(updatedUser.Address))
+            {
+                updatedUser.Address = Request.Form["alumniUser.Address"];
+            }
+            if (!Request.Form["alumniUser.City"].Equals(updatedUser.City))
+            {
+                updatedUser.City = Request.Form["alumniUser.City"];
+            }
+            if (!Request.Form["alumniUser.State"].Equals(updatedUser.State))
+            {
+                updatedUser.State = Request.Form["alumniUser.State"];
+            }
+            if (!Request.Form["alumniUser.Zip"].Equals(updatedUser.Zip))
+            {
+                updatedUser.Zip = Request.Form["alumniUser.Zip"];
+            }
+            if (!Request.Form["alumniUser.Phone"].Equals(updatedUser.Phone))
+            {
+                updatedUser.Phone = Request.Form["alumniUser.Phone"];
+            }
+            if (!Request.Form["alumniUser.EmployerName"].Equals(updatedUser.EmployerName))
+            {
+                updatedUser.EmployerName = Request.Form["alumniUser.EmployerName"];
+            }
+            if (!Request.Form["alumniUser.FieldofEmployment"].Equals(updatedUser.FieldofEmployment))
+            {
+                updatedUser.FieldofEmployment = Request.Form["alumniUser.FieldofEmployment"];
+            }
+            if (!Request.Form["alumniUser.Notes"].Equals(updatedUser.Notes))
+            {
+                updatedUser.Notes = Request.Form["alumniUser.Notes"];
+            }
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {

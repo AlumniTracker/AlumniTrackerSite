@@ -37,31 +37,31 @@ nav-item {
 }
 
 .a {
-    color: #0077cc;
+    color: #082E6C;
 }
 
 .navi {
     color: black;
     font: bold 14px calibri;
 }
-
+/*this needs embed yellow*/
     .navi:hover {
-        background-color: #FFC000;
+        background-color: #082E6C;
     }
 
     .navi:active {
-        background-color: #FFC000;
+        background-color: #FECD06;
     }
 
 .btn-primary {
-    color: #fff;
+    color: #082E6C;
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
+    color: #082E6C;
+    background-color: #082E6C;
     border-color: #1861ac;
 }
 
@@ -130,18 +130,18 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 .a {
-    color: #0077cc;
+    color: #082E6C;
 }
 
 .btn-primary {
-    color: #fff;
+    color: #082E6C;
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
+    color: #082E6C;
+    background-color: #082E6C;
     border-color: #1861ac;
 }
 

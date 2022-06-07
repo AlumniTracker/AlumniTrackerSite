@@ -74,4 +74,36 @@ body {
 }
 .btn {
     background-color: #082E6C;
+    color: #FECD06;
+}
+.btn:hover {
+    background-color: #082E6C;
+    color: #FECD06;
+}
+.btnMenu {
+    background-color: white;
+    color: #FECD06;
+}
+
+    .btnMenu:hover {
+        background-color: #082E6C;
+        color: #FECD06;
+    }
+
+.nav-secret {
+    background-color:white;
+    color: #082E6C;
+    
+}
+    .nav-secret:active {
+        background-color: #082E6C;
+        color: #FECD06;
+    }
+    .nav-secret:hover {
+        background-color: #082E6C;
+        color: #FECD06;
+    }
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: #082E6C;
+    color: #FECD06;
 }
