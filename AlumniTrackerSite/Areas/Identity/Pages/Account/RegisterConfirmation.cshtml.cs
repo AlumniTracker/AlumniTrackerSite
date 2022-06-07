@@ -20,13 +20,11 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _sender;
-        private readonly AlumniUser _alumniUser;
 
-        public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender, AlumniUser alumniUser)
+        public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender)
         {
             _userManager = userManager;
             _sender = sender;
-            _alumniUser = alumniUser;
         }
 
         /// <summary>
