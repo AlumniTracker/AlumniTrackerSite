@@ -9,6 +9,7 @@ using AlumniTrackerSite.Contexts;
 using AlumniTrackerSite.Models;
 using static AlumniTrackerSite.Data.Security;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AlumniTrackerSite
 {
@@ -24,6 +25,7 @@ namespace AlumniTrackerSite
         }
 
         // GET: AlumniUsers
+        [Authorize]
         public async Task<IActionResult> Index()//replace this to be search, and then use general input?
         {
               return _context.AlumniUsers != null ? 
@@ -32,6 +34,7 @@ namespace AlumniTrackerSite
         }
         
         [HttpPost]
+        [Authorize]
         public IActionResult Index(string SearchPhrase, string type)
         {
             if (!GeneralInput(SearchPhrase)) return View(); // Returns complete index, may be bad?
@@ -64,30 +67,30 @@ namespace AlumniTrackerSite
             return _context.AlumniUsers.ToList(); // Returns Full list
 
         }
-        public bool Mapper(int StudentID)
-        {
-            Random random = new Random();
-            string mapID = random.Next(1000000000).ToString(); 
-            HttpContext.Session.SetString(mapID, StudentID.ToString()); 
-            return true;
-        }
-        public int IdGetter(string? mapID)
-        {
-            int StudentID;
-            int.TryParse(HttpContext.Session.GetString(mapID), out StudentID);
-            return StudentID;
-        }
+        //public bool Mapper(int StudentID)
+        //{
+        //    Random random = new Random();
+        //    string mapID = random.Next(1000000000).ToString(); 
+        //    HttpContext.Session.SetString(mapID, StudentID.ToString()); 
+        //    return true;
+        //}
+        //public int IdGetter(string? mapID)
+        //{
+        //    int StudentID;
+        //    int.TryParse(HttpContext.Session.GetString(mapID), out StudentID);
+        //    return StudentID;
+        //}
         // GET: AlumniUsers/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(string? idString)// be able to map random numbers to an id per session
         {
-            int id = int.Parse(idString);
-            if (id == null || _context.AlumniUsers == null)
+            if (idString == null || _context.AlumniUsers == null)
             {
                 return NotFound();
             }
 
             var alumniUser = await _context.AlumniUsers
-                .FirstOrDefaultAsync(m => m.StudentId.Equals(id));
+                .FirstOrDefaultAsync(m => m.StudentId.Equals(idString));
             if (alumniUser == null)
             {
                 return NotFound();
@@ -97,6 +100,7 @@ namespace AlumniTrackerSite
         }
 
         // GET: AlumniUsers/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -107,43 +111,28 @@ namespace AlumniTrackerSite
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,DateModified,Address,City,State,Zip,Phone,AlumniId,Id")] AlumniUser alumniUser)
         {
-            //if (!CheckInputs(alumniUser))
-            //{
-            //    return View(); // CHANGE TO ERROR
-            //}
+            if (!CheckInputs(alumniUser))
+            {
+                return View(); // CHANGE TO ERROR
+            }
             if (ModelState.IsValid)
             {
                 alumniUser.DateModified = DateTime.Now;
                 alumniUser.Id = _userManager.GetUserId(User);
+                if(_context.AlumniUsers.Where(m => m.Id.Equals(alumniUser.Id)).Any() || alumniUser.Id == null)
+                {
+                    //return 
+                }
                 _context.Add(alumniUser);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(alumniUser);
         }
-        public static bool CheckInputs(AlumniUser alumniUser)
-        {
-            bool[] goodInput = new bool[12];
-            goodInput[0] = NumericalInput(alumniUser.StudentId);
-            goodInput[1] = GeneralInput(alumniUser.Name);
-            goodInput[2] = GeneralInput(alumniUser.EmployerName);
-            goodInput[3] = GeneralInput(alumniUser.FieldofEmployment);
-            goodInput[4] = NumericalInput(alumniUser.YearGraduated);
-            goodInput[5] = GeneralInput(alumniUser.Degree);
-            goodInput[6] = GeneralInput(alumniUser.Notes);
-            goodInput[7] = GeneralInput(alumniUser.Address);
-            goodInput[8] = GeneralInput(alumniUser.City);
-            goodInput[9] = GeneralInput(alumniUser.State);
-            goodInput[10] = NumericalInput(alumniUser.Zip);
-            goodInput[11] = PhoneInput(alumniUser.Phone);
-            //PhoneInput(alumniUser.PhoneNumber); //ASP NET Identity Phone Number
 
-            if (goodInput.Contains(false)) return false;
-
-            return true;
-        }
         public string GetName(int id)
         {
             //some code to get alumniuser identity user
@@ -157,6 +146,7 @@ namespace AlumniTrackerSite
 
 
         // GET: AlumniUsers/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(string? id)
         {
             if (id == null || _context.AlumniUsers == null)
@@ -177,6 +167,7 @@ namespace AlumniTrackerSite
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(string id, [Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,DateModified,Address,City,State,Zip,Phone,AlumniId,Id")] AlumniUser alumniUser)
         {
             if (id != alumniUser.Id)
@@ -210,6 +201,7 @@ namespace AlumniTrackerSite
         }
 
         // GET: AlumniUsers/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(string? id)
         {
             if (id == null || _context.AlumniUsers == null)
@@ -230,6 +222,7 @@ namespace AlumniTrackerSite
         // POST: AlumniUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.AlumniUsers == null)

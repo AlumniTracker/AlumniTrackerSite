@@ -4,13 +4,15 @@
     word-break: break-all;
 }
 
-.dashed-Vertical-Line {
+/*.dashed-Vertical-Line {
     border-right: dashed 1px hsla(0,0%,100%,.5);
     border-left: 1px dashed rgba(0,0,0,.35);
-    width: 5 !important;
-    min-width: 5 !important;
+    width: 0px !important;
+    min-width: 0px !important;
+}*/
+.invis {
+    color: rgba(255,0,0,0.5)
 }
-
 .footerText {
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -71,14 +73,16 @@ button.accept-policy {
     line-height: inherit;
 }
 
-.footer {
+/*.footer {
     position: absolute;
     bottom: 0;
     width: 100%;
+    height:100px;
     white-space: nowrap;
-    line-height: 120px;
+    line-height: 100px;
     background-color: #082E6C;
-}
+
+}*/
 
 
 
@@ -89,20 +93,20 @@ button.accept-policy {
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-a.navbar-brand {
+/*a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
-}
+}*/
 
-.dashed-Vertical-Line {
+/*.dashed-Vertical-Line {
     border-right: dashed 1px hsla(0,0%,100%,.5);
     border-left: 1px dashed rgba(0,0,0,.35);
-    width: 5 !important;
-    min-width: 5 !important;
-}
+    width: 0px !important;
+    min-width: 0px !important;
+}*/
 
-.footerText {
+/*.footerText {
     word-wrap: break-word;
     overflow-wrap: break-word;
     text-align: start;
@@ -147,5 +151,5 @@ a.navbar-brand {
 button.accept-policy {
     font-size: 1rem;
     line-height: inherit;
-}
+}*/
 
