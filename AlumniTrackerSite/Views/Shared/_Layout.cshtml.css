@@ -1,4 +1,15 @@
-﻿a.navbar-brand {
+﻿#header {
+    position: relative;
+}
+#header-content {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+a.padding{
+    padding-right:1em;
+}
+a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
@@ -25,7 +36,25 @@
 .a {
     color: #082E6C;
 }
+.no-buffer {
+    margin: 0px;
+    padding: 0px;
+}
+.space{
+    padding: 10px;
+}
+.nav-link {
+    display: inline-block;
+}
 
+.navbar-nav {
+    display: inline-block;
+    flex-direction: row;
+}
+
+.nav-item {
+    display: inline-block;
+}
 .navi {
     color: black;
     font: bold 14px calibri;
