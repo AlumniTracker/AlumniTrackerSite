@@ -5,7 +5,7 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using AlumniTrackerSite.Models;
+//using AlumniTrackerSite.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -20,13 +20,13 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _sender;
-        private readonly AlumniUser _alumniUser;
-
-        public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender, AlumniUser alumniUser)
+        //private readonly AlumniUser _alumniUser;
+        //AlumniUser alumniUser
+        public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender)
         {
             _userManager = userManager;
             _sender = sender;
-            _alumniUser = alumniUser;
+            //_alumniUser = alumniUser;
         }
 
         /// <summary>

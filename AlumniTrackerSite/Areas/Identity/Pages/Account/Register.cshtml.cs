@@ -51,7 +51,6 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _context = context;
         }
-        public AlumniUser AlumniUser { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -124,12 +123,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             {
                 if (!CheckInputs(alumniUser)) return Page(); // CHANGE TO ERROR
                 var user = CreateUser();
-        //  This is where we find the Identity Info so it can be used for AlumniUser Create
-                string UserID = _userManager.GetUserId(User);
-        // still working on the next line
-                AlumniUser AUser = CreateAlumni(UserID);
-
-                // AlumniUser data
+                       // AlumniUser data
                 alumniUser.DateModified = DateTime.Now;
                 alumniUser.Id = user.Id;
                 _context.Add(alumniUser);
@@ -175,11 +169,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
-        private AlumniUser CreateAlumni(string UserId)
-        {
-            // still working on how to accomplish this
-            return AlumniUser;
-        }
+
         private IdentityUser CreateUser()
         {
             try
