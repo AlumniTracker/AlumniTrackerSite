@@ -32,7 +32,6 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly AlumniUser _alumniUser;
         private readonly TrackerContext _context;
 
         public RegisterModel(
