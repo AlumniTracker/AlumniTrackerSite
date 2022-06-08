@@ -229,10 +229,14 @@ namespace AlumniTrackerSite
             {
                 return Problem("Entity set 'TrackerContext.AlumniUsers'  is null.");
             }
-            var alumniUser = await _context.AlumniUsers.FindAsync(id);
+            //FindAsync(id);
+            AlumniUser? alumniUser = await _context.AlumniUsers.Where(c => c.StudentId == c.StudentId).FirstOrDefaultAsync();
             if (alumniUser != null)
             {
+                 IdentityUser user = await _userManager.FindByIdAsync(alumniUser.Id);
+
                 _context.AlumniUsers.Remove(alumniUser);
+                _context.Users.Remove(user);
             }
             
             await _context.SaveChangesAsync();

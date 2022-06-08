@@ -1,10 +1,12 @@
 ﻿using MimeKit;
 using MailKit.Net.Smtp;
 using Newtonsoft.Json;
+using MailKit;
 //using System.Text.Json;
 
 namespace AlumniTrackerSite.Data
 {
+
     public static class Email
     {
         private static EmailData _data;
@@ -31,7 +33,7 @@ namespace AlumniTrackerSite.Data
         //{
 
         //}
-        private static async Task SendMessage(string reciever, string subject, string body)
+        public static async Task SendMessage(string reciever, string subject, string body)
         {
             if(_data == null)
             { _data = Initialize(); }
@@ -53,8 +55,7 @@ namespace AlumniTrackerSite.Data
             {
                 _client.Connect("smtp.gmail.com", 465, true);
                 _client.Authenticate(_data.AccountName, _data.AccountPass);
-                await _client.SendAsync(message);
-                Console.WriteLine("Email Sent!!");
+                var response = await _client.SendAsync(message);
             }
             catch (Exception ex)
             {

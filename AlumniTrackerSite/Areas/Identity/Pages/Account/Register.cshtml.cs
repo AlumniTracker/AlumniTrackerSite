@@ -121,7 +121,11 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                if (!CheckInputs(alumniUser)) return Page(); // CHANGE TO ERROR
+                if (!CheckInputs(alumniUser)) {
+                    ModelState.AddModelError(string.Empty, "bad input");
+                    return Page();
+                }
+
                 var user = CreateUser();
                        // AlumniUser data
                 alumniUser.DateModified = DateTime.Now;
