@@ -1,4 +1,7 @@
-﻿#header {
+﻿html, body {
+    height: 100%;
+}
+#header {
     position: relative;
 }
 #header-content {
@@ -116,7 +119,7 @@ button.accept-policy {
     line-height: inherit;
 }
 
-/*.footer {
+/*.footerBTM {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -125,8 +128,8 @@ button.accept-policy {
     line-height: 100px;
     background-color: #082E6C;
 
-}*/
-
+}
+*/
 
 
 
