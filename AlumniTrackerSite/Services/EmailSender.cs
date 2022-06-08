@@ -32,15 +32,18 @@ namespace AlumniTrackerSite.Services
 
         public async Task Execute(string subject, string message, string toEmail)
         {
-            Email.SendMessage(toEmail, subject, message);
+            string response = await Email.SendMessage(_logger, toEmail, subject, message);
+            //EventId result = new EventId(200);
+            bool result = response.Contains("2.0.0 OK");
 
+            _logger.LogInformation(result
+                                   ? $"Email to {toEmail} queued successfully!"
+                                   : $"Failure Email to {toEmail}");
             //// Disable click tracking.
             //// See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
             //msg.SetClickTracking(false, false);
             //var response = await client.SendEmailAsync(msg);
-            //_logger.LogInformation(response.IsSuccessStatusCode
-            //                       ? $"Email to {toEmail} queued successfully!"
-            //                       : $"Failure Email to {toEmail}");
+            //
         }
     }
 }

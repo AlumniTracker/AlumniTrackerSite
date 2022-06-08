@@ -32,6 +32,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly AlumniUser _alumniUser;
         private readonly TrackerContext _context;
 
         public RegisterModel(
@@ -120,8 +121,8 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                if (!CheckInputs(alumniUser)) {
-                    ModelState.AddModelError(string.Empty, "bad input");
+                if (!CheckInputs(_logger, alumniUser)) {
+                    ModelState.AddModelError(string.Empty, "An Error has Occured");
                     return Page();
                 }
 
@@ -139,7 +140,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _context.SaveChanges();
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation(User.Identity.Name + " created a new account with password on " + DateTime.Now);
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

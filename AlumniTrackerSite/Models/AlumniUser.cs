@@ -16,7 +16,7 @@ namespace AlumniTrackerSite.Models
         public string StudentId { get; set; } = null!;
         [PersonalData]
         [MaxLength(50)]
-        [Display(Name ="This is in fact, your name")]
+        [Display(Name ="name")]
         public string Name { get; set; } = null!;
         [PersonalData]
         [MaxLength(100)]
@@ -47,6 +47,7 @@ namespace AlumniTrackerSite.Models
         [MaxLength(2)]
         public string? State { get; set; }
         [PersonalData]
+        [DataType(DataType.PostalCode)]
         [MaxLength(10)]
         public string? Zip { get; set; }
         [PersonalData]
