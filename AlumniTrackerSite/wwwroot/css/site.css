@@ -51,6 +51,10 @@ body {
     .navi:active {
         background-color: #FECD06;
     }
+button{
+    border:0px solid white;
+    background-color:Background;
+}
 .footer {
     position: absolute;
     bottom: 0;
