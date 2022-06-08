@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
@@ -10,6 +10,8 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using AlumniTrackerSite.Contexts;
+using AlumniTrackerSite.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -18,6 +20,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using static AlumniTrackerSite.Data.Security;
 
 namespace AlumniTrackerSite.Areas.Identity.Pages.Account
 {
@@ -29,8 +32,11 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly AlumniUser _alumniUser;
+        private readonly TrackerContext _context;
 
         public RegisterModel(
+            TrackerContext context,
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
@@ -43,6 +49,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -97,6 +104,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            public AlumniUser alum { get; set; }
         }
 
 
@@ -108,11 +116,22 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            AlumniUser alumniUser = Input.alum;
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+                if (!CheckInputs(_logger, alumniUser)) {
+                    ModelState.AddModelError(string.Empty, "An Error has Occured");
+                    return Page();
+                }
+
                 var user = CreateUser();
+                       // AlumniUser data
+                alumniUser.DateModified = DateTime.Now;
+                alumniUser.Id = user.Id;
+                _context.Add(alumniUser);
+                
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -120,7 +139,8 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _context.SaveChanges();
+                    _logger.LogInformation(User.Identity.Name + " created a new account with password on " + DateTime.Now);
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

@@ -1,4 +1,5 @@
 ﻿@page
+@using AlumniTrackerSite.Models
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
@@ -7,29 +8,178 @@
 <h1>@ViewData["Title"]</h1>
 
 <div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-                <label asp-for="Input.Email"></label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+    <div class="row">
+
+
+        <div class="@*col-md-4*@ container">
+        
+            <h2>An Alumni Account</h2>
+
+<div class="container-lg border text-center mt-3 Banner">
+    <h1>User Info</h1>
+</div>
+<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+<div class="row">
+    <div class="col-lg-12">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-mt-3">
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-floating">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.Password"></label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+            <div class="row">
+                <div class="col mt-3">
+                    <div class="form-group">
+                        <label asp-for="Input.Password"></label>
+                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col mt-3">
+                    <div class="form-group">
+                        <label asp-for="Input.ConfirmPassword"></label>
+                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-floating">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.ConfirmPassword"></label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            <div class="row">
+                <div class="col mt-3">
+                    <div class="form-group">
+                        <label asp-for="Input.alum.StudentId" class="control-label"></label>
+                        <input asp-for="Input.alum.StudentId" class="form-control" />
+                        <span asp-validation-for="Input.alum.StudentId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col mt-3">
+                    <div class="form-group">
+                        <label asp-for="Input.alum.Name" class="control-label"></label>
+                        <input asp-for="Input.alum.Name" class="form-control" />
+                        <span asp-validation-for="Input.alum.Name" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
+        
     </div>
+</div>
+
+<div class="container-lg border text-center mt-3 Banner">
+    <h1>General Info</h1>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+
+            <div class="row">
+                <div class="col mt-3">
+                    <div class="form-group">
+                        <label asp-for="Input.alum.Degree" class="control-label"></label>
+                        <input asp-for="Input.alum.Degree" class="form-control" />
+                        <span asp-validation-for="Input.alum.Degree" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col mt-3">
+                    <div class="form-group">
+                        <label asp-for="Input.alum.YearGraduated" class="control-label"></label>
+                        <input asp-for="Input.alum.YearGraduated" class="form-control" />
+                        <span asp-validation-for="Input.alum.YearGraduated" class="text-danger"></span>
+                    </div>
+                </div>
+            </div><div class="row">
+                <div class="col mt-3">
+                    <div class="form-group">
+                        <label asp-for="Input.alum.Address" class="control-label"></label>
+                        <input asp-for="Input.alum.Address" class="form-control" />
+                        <span asp-validation-for="Input.alum.Address" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col mt-3">
+                    <div class="form-group">
+                        <label asp-for="Input.alum.City" class="control-label"></label>
+                        <input asp-for="Input.alum.City" class="form-control" />
+                        <span asp-validation-for="Input.alum.City" class="text-danger"></span>
+                    </div>
+                </div>
+            </div><div class="row">
+                <div class="col mt-3">
+                    <div class="form-group">
+                        <label asp-for="Input.alum.State" class="control-label"></label>
+                        <input asp-for="Input.alum.State" class="form-control" />
+                        <span asp-validation-for="Input.alum.State" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col mt-3">
+                    <div class="form-group">
+                        <label asp-for="Input.alum.Zip" class="control-label"></label>
+                        <input asp-for="Input.alum.Zip" class="form-control" />
+                        <span asp-validation-for="Input.alum.Zip" class="text-danger"></span>
+                    </div>
+                </div>
+            </div><div class="row">
+                <div class="col mt-3">
+                    <div class="form-group">
+                        <label asp-for="Input.alum.Phone" class="control-label"></label>
+                        <input asp-for="Input.alum.Phone" class="form-control" />
+                        <span asp-validation-for="Input.alum.Phone" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col mt-3">
+                    <div class="form-group">
+                        <label asp-for="Input.alum.FieldofEmployment" class="control-label"></label>
+                        <input asp-for="Input.alum.FieldofEmployment" class="form-control" />
+                        <span asp-validation-for="Input.alum.FieldofEmployment" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+</div>
+
+<div class="container-lg border text-center mt-3 Banner">
+    <h1>Employer Info</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+
+            <div class="form-group mt-3">
+                <label asp-for="Input.alum.EmployerName" class="control-label"></label>
+                <input asp-for="Input.alum.EmployerName" class="form-control" />
+                <span asp-validation-for="Input.alum.EmployerName" class="text-danger"></span>
+            </div>
+
+    </div>
+</div>
+
+<div class="container-lg border text-center mt-3 Banner">
+    <h1>Notes</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mt-3">
+                <label asp-for="Input.alum.Notes" class="control-label"></label>
+                <input asp-for="Input.alum.Notes" class="form-control" />
+                <span asp-validation-for="Input.alum.Notes" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mt-3 footer-buffer">
+                @*<input type="submit" value="Create" class="btn btn-primary" />*@
+                <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            </div>
+
+    </div>
+</div>
+</form>
+        @*</form>*@
+    </div>
+    
 @*    <div class="col-md-6 col-md-offset-2">
         <section>
             <h3>Use another service to register.</h3>

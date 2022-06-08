@@ -1,17 +1,37 @@
-﻿using System.Text.RegularExpressions;
+﻿using AlumniTrackerSite.Models;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace AlumniTrackerSite.Data
 {
     public static class Security
     {
-        private static string BlackList = 
-            @"<>/\'{};:`&|";
-        private static string[] BlackListWords = { "DATABASE", "1:1", "TABLE", "TRUNCATE", "", "SELECT" };
+        private static string BlackList =
+            @"<>/\'{};:`&|^";
+        private static string[] BlackListWords = { "DATABASE", "1:1", "1=1", "TABLE", "TRUNCATE", "SELECT", "UNION" };
         private static string NumberWhiteList = "0123456789";
+        public static bool CheckInputs(ILogger log, AlumniUser alumniUser)
+        {
+            bool[] goodInput = new bool[12];
+            goodInput[0] = NumericalInput(log, alumniUser.StudentId);
+            goodInput[1] = GeneralInput(log, alumniUser.Name);
+            goodInput[2] = GeneralInput(log, alumniUser.EmployerName);
+            goodInput[3] = GeneralInput(log, alumniUser.FieldofEmployment);
+            goodInput[4] = NumericalInput(log, alumniUser.YearGraduated);
+            goodInput[5] = GeneralInput(log, alumniUser.Degree);
+            goodInput[6] = GeneralInput(log, alumniUser.Notes);
+            goodInput[7] = GeneralInput(log, alumniUser.Address);
+            goodInput[8] = GeneralInput(log, alumniUser.City);
+            goodInput[9] = GeneralInput(log, alumniUser.State);
+            goodInput[10] = NumericalInput(log, alumniUser.Zip);
+            goodInput[11] = GeneralInput(log, alumniUser.Phone);
+            //PhoneInput(alumniUser.PhoneNumber); //ASP NET Identity Phone Number
 
+            if (goodInput.Contains(false)) return false;
+            return true;
+        }
 
-        public static bool GeneralInput(string input)
+        public static bool GeneralInput(ILogger log, string input)
         {
             // Null or Empty
             if(input == null || input == "")
@@ -22,20 +42,26 @@ namespace AlumniTrackerSite.Data
             foreach (string word in words)
             {
                 if(BlackListWords.Contains(word))
-                { return false; }
+                {
+                    log.LogWarning("Possible Sql Injection '{input}' at {date}", input, DateTime.Now);
+                    return false; 
+                }
             }
             // Coding Characters
             //input = (string)input.Distinct();
             if (input.Contains(BlackList))
-            { return false; }
+            {
+                log.LogWarning("Bad Inputs '{input}' at {date}", input, DateTime.Now);
+                return false; 
+            }
 
             return true;
         }
-        public static bool EmailInput(string input)
+        public static bool EmailInput(ILogger log, string input)
         {
             if (input == null || input == "") return true;
 
-            if (GeneralInput(input))
+            if (GeneralInput(log, input))
             {
                 //HttpUtility.HtmlEncode(input); // This is a note to be used later
 
@@ -47,10 +73,10 @@ namespace AlumniTrackerSite.Data
             }
             return false;
         } 
-        public static bool NumericalInput(string input)
+        public static bool NumericalInput(ILogger log, string input)
         {
             if (input == null || input == "") return true;
-            if (GeneralInput(input))
+            if (GeneralInput(log, input))
             {
                 foreach (char character in input)
                 {
@@ -59,15 +85,6 @@ namespace AlumniTrackerSite.Data
                         return false;
                     }
                 }
-                return true;
-            }
-            return false;
-        }
-        public static bool PhoneInput(string input)
-        {
-            if (input == null || input == "") return true;
-            if (GeneralInput(input))
-            {
                 return true;
             }
             return false;

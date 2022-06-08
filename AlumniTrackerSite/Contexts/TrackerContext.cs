@@ -82,7 +82,7 @@ namespace AlumniTrackerSite.Contexts
 
                 entity.Property(e => e.Notes).HasMaxLength(500);
 
-                entity.Property(e => e.Phone).HasMaxLength(10);
+                entity.Property(e => e.Phone).HasMaxLength(15);
 
                 entity.Property(e => e.State).HasMaxLength(2);
 

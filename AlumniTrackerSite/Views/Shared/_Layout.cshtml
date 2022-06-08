@@ -3,100 +3,74 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AlumniSite</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AlumniSite.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm">
-        <div class="container"> @*this may be cause for formatting issue*@
 
-            
-
-                <div class="col align-self-start float-left">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="~/Images/Alumni-Logo-01.png" />
-                    </a>
-                </div>
-                        @*sociallinks*@
-                        <div class="col-1 col align-self-start ">
-                    <ul class="navbar-nav flex-grow-1 justify-content-end">
-                        <li>
-                            <a class="nav-link" href="https://www.linkedin.com/groups/13706636/">
-                                <img src="~/Images/LinkedIn.png" />
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="https://www.instagram.com/centralia_college_foundation/">
-                                <img src="~/Images/Instagram.png" />
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="https://www.facebook.com/CentraliaCollegeFoundation/">
-                                <img src="~/Images/Facebook.png" />
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-
-                    @*navigationlinks*@
-                <div class=" col-5 align-self-end float-right">
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1 justify-content-end">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark navi" @*data-toggle="dropdown" Not sure what this is, but seems to work without*@ 
-                                    href="https://www.centraliacollegealumni.org/">
-                                    Return
-                                </a>
-                            </li>
-                            @*These below need to be put into admin and super admin only *@
+    <header class="col-md-8 offset-2">
+        <nav class="navbar navbar-expand-sm col-md-12">
+            <div class="col-md-12">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/Alumni-Logo-01.png" /></a>
+                <div class="float-right">
+                    <div class="float-right">
+                        <ul class="navbar-nav">
+                            <li><a style="padding:.5em" class="" href="https://www.linkedin.com/groups/13706636/"><img src="~/Images/LinkedIn.png" /></a></li>
+                            <li><a style="padding:.5em" class="" href="https://www.instagram.com/centralia_college_foundation/"><img src="~/Images/Instagram.png" /></a></li>
+                            <li><a style="padding:.5em" class="" href="https://www.facebook.com/CentraliaCollegeFoundation/"><img src="~/Images/Facebook.png" /></a></li>
+                        </ul>
+                    </div>
+                    <br /><br /><br /><br />
+                    <div id="header-content">
+                        <ul class="navbar-nav">
                             <li class="nav-item">
                                 <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Index">Search</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Create">New Alumni</a>
                             </li>
-                           @* <li class="nav-item dropdown">
-                                <a class="nav-link text-dark dropdown-toggle navi" 
-                                href="https://www.centraliacollegealumni.org/resources">
-                                Resources
-                            </a>
-
-                            <ul class="dropdown-menu clearfix" 
-                                role="menu">
-                                <li><a class="nav-link dropdown-item" href="https://www.centraliacollegealumni.org/zoom-backgrounds">Zoom Backgrounds</a></li>
-                                <li><a class="nav-link dropdown-item" href="https://www.centraliacollegealumni.org/mentoring">Mentoring</a></li>
-                            </ul>
-                            </li>*@
-
-
+                            <partial name="_LoginPartial" />
                         </ul>
-                        <partial name="_LoginPartial" />
                     </div>
                 </div>
-
-        </div>
+            </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="col-md-8 offset-md-2">
+        <main role="main" class="@*pb-2*@ ">
             @RenderBody()
         </main>
     </div>
-    <div class="buffer"></div>
     <footer class="footer text-muted">
         <div class="container">
-            <img src="~/Images/CCF-Logo-yellow.png" />
-            <div class="dashed-Vertical-Line"></div>
-            <div class="dashed-Vertical-Line align-self-end"></div>
+                    <div class="row"> </div>
+
+        <div class="row">
+            @*<div class="col-mt-12">*@
+                <div class="col-sm-2">
+                    <img src="~/Images/CCF-Logo-yellow.png" />
+                </div>
+                <div class="col-sm-2">
+                    <p class="yellowed">Contact Us:</p>
+                </div>
+                <div class="dashed-Vertical-Line"></div>
+                <div class="col-sm-2">
+                    <p class="yellowed">Find us:</p>
+                </div>
+                <div class="dashed-Vertical-Line"></div>
+                <div class="col-sm-2">
+                    <p class="yellowed">Find us:</p>
+                </div>
+            </div>
         </div>
-        
+        @*</div>*@
+
+
     </footer>
-   
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

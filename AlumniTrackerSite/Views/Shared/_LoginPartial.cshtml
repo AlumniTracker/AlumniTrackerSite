@@ -4,7 +4,7 @@
 @inject UserManager<IdentityUser> UserManager
 
 
-<ul class="navbar-nav">
+<ul class="nav">
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
@@ -12,7 +12,7 @@
     </li>
     <li class="nav-item">
         <form id="logoutForm" class="form-inline navi" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-link text-dark navi">Logout</button>
+            <button id="logout" type="submit" class="nav-link text-dark navi">Logout</button>
         </form>
     </li>
 }
