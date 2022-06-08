@@ -17,11 +17,13 @@ namespace AlumniTrackerSite
     {
         private readonly TrackerContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ILogger<AlumniUsersController> _logger;
 
-        public AlumniUsersController(TrackerContext context, UserManager<IdentityUser> userManager)
+        public AlumniUsersController(TrackerContext context, UserManager<IdentityUser> userManager, ILogger<AlumniUsersController> logger)
         {
             _context = context;
             _userManager = userManager;
+            _logger = logger;
         }
 
         // GET: AlumniUsers
@@ -37,13 +39,16 @@ namespace AlumniTrackerSite
         [Authorize]
         public IActionResult Index(string SearchPhrase, string type)
         {
-            if (!GeneralInput(SearchPhrase)) return View(); // Returns complete index, may be bad?
-            if (!GeneralInput(type)) return View();         // Again Returns complete Index 
+            //if (!GeneralInput(_logger, SearchPhrase)) return View(); // Returns complete index, may be bad?
+            //if (!GeneralInput(_logger, type)) return View();         // Again Returns complete Index 
             
             return View(SearchHelper(SearchPhrase, type));
         }
         public IEnumerable<AlumniUser> SearchHelper(string Phrase, string Type)
         {
+            if(!GeneralInput(_logger, Phrase)) return new List<AlumniUser>();
+            if (!GeneralInput(_logger, Type)) return new List<AlumniUser>();
+
             if (Phrase != null)
             {
                 switch (Type)
@@ -61,10 +66,10 @@ namespace AlumniTrackerSite
                             .Where(c => c.EmployerName.ToLower().Contains(Phrase.ToLower())));
 
                     default:
-                        return _context.AlumniUsers.ToList(); // Returns Full List, which is bad
+                        return new List<AlumniUser>(); // Returns Full List, which is bad
                 }
             }
-            return _context.AlumniUsers.ToList(); // Returns Full list
+            return new List<AlumniUser>(); // Returns Full list
 
         }
         //public bool Mapper(int StudentID)
@@ -114,7 +119,7 @@ namespace AlumniTrackerSite
         [Authorize]
         public async Task<IActionResult> Create([Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,DateModified,Address,City,State,Zip,Phone,AlumniId,Id")] AlumniUser alumniUser)
         {
-            if (!CheckInputs(alumniUser))
+            if (!CheckInputs(_logger, alumniUser))
             {
                 return View(); // CHANGE TO ERROR
             }
@@ -229,10 +234,14 @@ namespace AlumniTrackerSite
             {
                 return Problem("Entity set 'TrackerContext.AlumniUsers'  is null.");
             }
-            var alumniUser = await _context.AlumniUsers.FindAsync(id);
+            //FindAsync(id);
+            AlumniUser? alumniUser = await _context.AlumniUsers.Where(c => c.StudentId == c.StudentId).FirstOrDefaultAsync();
             if (alumniUser != null)
             {
+                 IdentityUser user = await _userManager.FindByIdAsync(alumniUser.Id);
+
                 _context.AlumniUsers.Remove(alumniUser);
+                _context.Users.Remove(user);
             }
             
             await _context.SaveChangesAsync();

@@ -1,6 +1,7 @@
 ﻿using MimeKit;
 using MailKit.Net.Smtp;
 using Newtonsoft.Json;
+using MailKit;
 //using System.Text.Json;
 
 namespace AlumniTrackerSite.Data
@@ -15,23 +16,23 @@ namespace AlumniTrackerSite.Data
             _client = new SmtpClient();
             return JsonConvert.DeserializeObject<EmailData>(File.ReadAllText(path));
         }
-        public static async Task SendConfirmMessage(string reciever)
+        public static async Task SendConfirmMessage(ILogger log, string reciever)
         {
             if (_data == null)
             { _data = Initialize(); }
-            await SendMessage(reciever,_data.ConfirmSubject,_data.ConfirmBody);
+            await SendMessage(log, reciever,_data.ConfirmSubject,_data.ConfirmBody);
         }
-        public static async Task SendResetPasswordMessage(string reciever)
+        public static async Task SendResetPasswordMessage(ILogger log, string reciever)
         {
             if (_data == null)
             { _data = Initialize(); }
-            await SendMessage(reciever, _data.ResetSubject, _data.ResetBody);
+            await SendMessage(log, reciever, _data.ResetSubject, _data.ResetBody);
         }
         //public static void AdminSendEmail(List<string> Recievers)
         //{
 
         //}
-        private static async Task SendMessage(string reciever, string subject, string body)
+        public static async Task<string> SendMessage(ILogger log, string reciever, string subject, string body)
         {
             if(_data == null)
             { _data = Initialize(); }
@@ -53,12 +54,14 @@ namespace AlumniTrackerSite.Data
             {
                 _client.Connect("smtp.gmail.com", 465, true);
                 _client.Authenticate(_data.AccountName, _data.AccountPass);
-                await _client.SendAsync(message);
-                Console.WriteLine("Email Sent!!");
+                string response = await _client.SendAsync(message);
+                return response;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                
+                log.LogWarning("Caught Exception" + ex.Message);
+                return "500 Internal Server Error";
             }
 
         }

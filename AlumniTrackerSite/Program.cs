@@ -2,6 +2,9 @@ using AlumniTrackerSite.Contexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AlumniTrackerSite.Data;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using AlumniTrackerSite.Services;
+//using WebPWrecover.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +31,9 @@ builder.Services.AddSession(options =>
 
 //builder.Services.AddTransient<IDataService, DataService>();
 builder.Services.AddRazorPages();
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+//builder.Services.Configure(builder.Configuration);
 
 var app = builder.Build();
 
