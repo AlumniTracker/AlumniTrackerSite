@@ -128,7 +128,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
 
                 var user = CreateUser();
                        // AlumniUser data
-                alumniUser.DateModified = DateTime.Now;
+                alumniUser.DateModified = DateTime.Today;
                 alumniUser.Id = user.Id;
                 _context.Add(alumniUser);
                 
@@ -151,7 +151,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    await _emailSender.SendEmailAsync(Input.Email, "Email.Confirmation",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)

@@ -16,23 +16,21 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.YearGraduated)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.EmployerName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FieldofEmployment)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.YearGraduated)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Degree)
             </th>
-            <th>
+            @*Currently Notes can be too long and break the page layout*@
+@*            <th>
                 @Html.DisplayNameFor(model => model.Notes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateModified)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Address)
             </th>
@@ -48,6 +46,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Phone)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateModified)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -58,23 +59,20 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.YearGraduated)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.EmployerName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FieldofEmployment)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.YearGraduated)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Degree)
             </td>
-            <td>
+@*            <td>
                 @Html.DisplayFor(modelItem => item.Notes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateModified)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
@@ -89,6 +87,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateModified)
             </td>
             <td>
 @*                <a asp-action="Edit" asp-route-id="@item.StudentId">Edit</a> |*@

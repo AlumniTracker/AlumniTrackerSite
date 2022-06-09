@@ -188,6 +188,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+            updatedUser.DateModified = DateTime.Today;
             _context.Update(updatedUser);
             _context.SaveChanges();
             await _signInManager.RefreshSignInAsync(user);

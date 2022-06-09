@@ -65,11 +65,19 @@ namespace AlumniTrackerSite
                         return (_context.AlumniUsers
                             .Where(c => c.EmployerName.ToLower().Contains(Phrase.ToLower())));
 
+                    case "yeargrad":
+                        return (_context.AlumniUsers
+                            .Where(c => c.YearGraduated.ToLower().Contains(Phrase.ToLower())));
+
+                    case "degreepath":
+                        return (_context.AlumniUsers
+                            .Where(c => c.Degree.ToLower().Contains(Phrase.ToLower()))); ;
+
                     default:
-                        return new List<AlumniUser>(); // Returns Full List, which is bad
+                        return _context.AlumniUsers.ToList(); // Returns Full List
                 }
             }
-            return new List<AlumniUser>(); // Returns Full list
+            return _context.AlumniUsers.ToList(); // Returns Full list
 
         }
         //public bool Mapper(int StudentID)
@@ -125,7 +133,7 @@ namespace AlumniTrackerSite
             }
             if (ModelState.IsValid)
             {
-                alumniUser.DateModified = DateTime.Now;
+                alumniUser.DateModified = DateTime.Today;
                 alumniUser.Id = _userManager.GetUserId(User);
                 if(_context.AlumniUsers.Where(m => m.Id.Equals(alumniUser.Id)).Any() || alumniUser.Id == null)
                 {
@@ -185,7 +193,7 @@ namespace AlumniTrackerSite
             {
                 try
                 {
-                    alumniUser.DateModified = DateTime.Now;
+                    alumniUser.DateModified = DateTime.Today;
                     _context.Update(alumniUser);
                     await _context.SaveChangesAsync();
                 }

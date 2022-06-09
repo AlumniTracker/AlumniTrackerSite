@@ -16,17 +16,17 @@ namespace AlumniTrackerSite.Data
             _client = new SmtpClient();
             return JsonConvert.DeserializeObject<EmailData>(File.ReadAllText(path));
         }
-        public static async Task SendConfirmMessage(ILogger log, string reciever)
+        public static async Task SendConfirmMessage(ILogger log, string returnURL, string reciever)
         {
             if (_data == null)
             { _data = Initialize(); }
-            await SendMessage(log, reciever,_data.ConfirmSubject,_data.ConfirmBody);
+            await SendMessage(log, reciever,_data.ConfirmSubject,_data.ConfirmBody + "\n\n" + returnURL);
         }
-        public static async Task SendResetPasswordMessage(ILogger log, string reciever)
+        public static async Task SendResetPasswordMessage(ILogger log, string returnURL, string reciever)
         {
             if (_data == null)
             { _data = Initialize(); }
-            await SendMessage(log, reciever, _data.ResetSubject, _data.ResetBody);
+            await SendMessage(log, reciever, _data.ResetSubject, _data.ResetBody + "\n\n" + returnURL);
         }
         //public static void AdminSendEmail(List<string> Recievers)
         //{
@@ -49,13 +49,13 @@ namespace AlumniTrackerSite.Data
             {
                 Text = body
             };
-
+            string response;
             try
             {
                 _client.Connect("smtp.gmail.com", 465, true);
                 _client.Authenticate(_data.AccountName, _data.AccountPass);
-                string response = await _client.SendAsync(message);
-                return response;
+                response = await _client.SendAsync(message);
+                
             }
             catch (Exception ex)
             {
@@ -63,6 +63,12 @@ namespace AlumniTrackerSite.Data
                 log.LogWarning("Caught Exception" + ex.Message);
                 return "500 Internal Server Error";
             }
+            bool result = response.Contains("2.0.0 OK");
+
+            log.LogInformation(result
+                                   ? $"Email to {reciever} queued successfully!"
+                                   : $"Failure Email to {reciever}");
+            return response;
 
         }
 
