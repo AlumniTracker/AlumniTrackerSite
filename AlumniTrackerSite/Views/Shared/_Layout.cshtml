@@ -5,7 +5,6 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,32 +17,38 @@
 
     <header class="col-md-8 offset-2">
         <nav class="navbar navbar-expand-sm col-md-12">
-        <div class="col-md-12">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/Alumni-Logo-01.png" /></a>
-            <div class="float-right" >
+            <div class="col-md-12">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/Alumni-Logo-01.png" /></a>
                 <div class="float-right">
-                    <ul class="navbar-nav">
-                        <li><a style="padding:.5em" class="" href="https://www.linkedin.com/groups/13706636/"><img src="~/Images/LinkedIn.png" /></a></li>                       
-                        <li><a style="padding:.5em" class="" href="https://www.instagram.com/centralia_college_foundation/"><img src="~/Images/Instagram.png" /></a></li>
-                        <li><a style="padding:.5em" class="" href="https://www.facebook.com/CentraliaCollegeFoundation/"><img src="~/Images/Facebook.png" /></a></li>
-                    </ul>
-                </div>
-                <br /><br /><br /><br />
-                <div id="header-content">
-                    <ul class="navbar-nav">
-                            @if (SignInManager.IsSignedIn(User)) {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Index">Search</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Create">New Alumni</a>
-                                </li>
-                            } else {}
+                    <div class="float-right">
+                        <ul class="navbar-nav">
+                            <li><a style="padding:.5em" class="" href="https://www.linkedin.com/groups/13706636/"><img src="~/Images/LinkedIn.png" /></a></li>
+                            <li><a style="padding:.5em" class="" href="https://www.instagram.com/centralia_college_foundation/"><img src="~/Images/Instagram.png" /></a></li>
+                            <li><a style="padding:.5em" class="" href="https://www.facebook.com/CentraliaCollegeFoundation/"><img src="~/Images/Facebook.png" /></a></li>
+                        </ul>
+                    </div>
+                    <br /><br /><br /><br />
+                    <div id="header-content">
+                        <ul class="navbar-nav">
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                @if (SignInManager.UserManager.GetUserName(User).Equals("CCFoundation@Centralia.edu"))
+                                { 
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Index">Search</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark navi" id="register" asp-area="Identity" asp-page="/Account/Register">Add Alumni</a>
+                                    </li>
+                                }
+                                else { }
+                            }
+                            else {}
                             <partial name="_LoginPartial" />
-                    </ul>                 
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
         </nav>
     </header>
     <div class="col-md-8 offset-md-2">
@@ -51,7 +56,10 @@
             @RenderBody()
         </main>
     </div>
-    <br /><br /><br /><br />
+    <br />
+    <br />
+    <br />
+    <br />
     <footer class="footer text-muted">
         <div class="row"> </div>
         <div class="container">
@@ -72,9 +80,7 @@
                 </div>
             </div>
         </div>
-
     </footer>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

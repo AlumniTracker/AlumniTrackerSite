@@ -11,10 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Conn") ?? throw new InvalidOperationException("Connection string 'Conn' not found.");
 
 builder.Services.AddDbContext<AlumniIdentityContext>(options =>
-    options.UseSqlServer(connectionString));;
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<AlumniIdentityContext>();;
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AlumniIdentityContext>();
 
 // Add services to the container.
 builder.Services.AddDbContext<TrackerContext>();
