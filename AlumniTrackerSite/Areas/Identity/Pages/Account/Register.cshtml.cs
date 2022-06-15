@@ -32,6 +32,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly AlumniUser _alumniUser;
         private readonly TrackerContext _context;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             TrackerContext context,
@@ -39,7 +40,8 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -48,6 +50,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _context = context;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -76,11 +79,13 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
             public AlumniUser alum { get; set; }
+            public string Name { get; set; }
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            ViewData["roles"] = _roleManager.Roles.ToList();
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -140,7 +145,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
+            ViewData["roles"] = _roleManager.Roles.ToList();
             // If we got this far, something failed, redisplay form
             return Page();
         }

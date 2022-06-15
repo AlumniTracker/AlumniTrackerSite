@@ -32,7 +32,7 @@ namespace AlumniTrackerSite.Data
         //{
 
         //}
-        public static async Task<string> SendMessage(ILogger log, string reciever, string subject, string body)
+        public static async Task<string> SendMessage(ILogger log, string reciever, string subject, string JSONBody)
         {
             if(_data == null)
             { _data = Initialize(); }
@@ -44,10 +44,11 @@ namespace AlumniTrackerSite.Data
             message.To.Add(MailboxAddress.Parse(reciever));
 
             message.Subject = subject;
-
-            message.Body = new TextPart("plain")
+            
+            message.Body = new TextPart("html")
             {
-                Text = body
+                Text = JSONBody + "<h2><img src='www.google.com/images/23' /></h2>"
+
             };
 
             try
@@ -85,6 +86,7 @@ namespace AlumniTrackerSite.Data
         public string Html { get; set; }
         public string AccountName { get; set; }
         public string AccountPass { get; set; }
+        public string ImagePath { get; set; }
     }
 }
 

@@ -1,0 +1,39 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityRole
+  
+<h1>Create a Role</h1>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+  
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input name="name" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+
+@*@model Microsoft.AspNetCore.Identity.IdentityRole
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<style type="text/css">
+    #tbrole, .c {
+        border: double;
+    }
+</style>
+
+@using (Html.BeginForm()){
+    <table class="table table-bordered table-hover">
+        <tr>
+            <td class="c">Enter Role Name To be Created:</td>
+            <td class="c">
+                @Html.EditorFor(m => m.Name)
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Create Role" />
+}*@

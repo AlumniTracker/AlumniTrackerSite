@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AlumniTrackerSite.Contexts;
 using AlumniTrackerSite.Models;
 using static AlumniTrackerSite.Data.Security;
-
+using AlumniTrackerSite.Models.AspNet;
 
 namespace AlumniTrackerSite
 {

@@ -32,9 +32,14 @@
                         <ul class="navbar-nav">
                             @if (SignInManager.IsSignedIn(User))
                             {
-                                @if (SignInManager.UserManager.GetUserName(User).Equals("CCFoundation@Centralia.edu"))
+                                @if (this.User.IsInRole("SuperAdmin"))
+                               
                                 { 
-                                    <li class="nav-item">
+                                  
+                                    <li class="nav-item">  
+                                        <a class="nav-link text-dark navi" asp-area="" asp-controller="Role" asp-action="Index">Role</a>  
+                                    </li>
+                                    <li class="nav-item">                                    
                                         <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Index">Search</a>
                                     </li>
                                     <li class="nav-item">

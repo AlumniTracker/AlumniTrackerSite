@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using AlumniTrackerSite.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using AlumniTrackerSite.Services;
-//using WebPWrecover.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +15,13 @@ builder.Services.AddDbContext<AlumniIdentityContext>(options =>
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AlumniIdentityContext>();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("readpolicy",
+        builder => builder.RequireRole("SuperAdmin", "Admin", "User"));
+    options.AddPolicy("writepolicy",
+        builder => builder.RequireRole("Admin", "SuperAdmin"));
+});
 
 // Add services to the container.
 builder.Services.AddDbContext<TrackerContext>();
