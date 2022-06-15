@@ -5,6 +5,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using AlumniTrackerSite.Contexts;
+using AlumniTrackerSite.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,15 +16,18 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account.Manage
 {
     public class DeletePersonalDataModel : PageModel
     {
+        private readonly TrackerContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
 
         public DeletePersonalDataModel(
+            TrackerContext context,
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<DeletePersonalDataModel> logger)
         {
+            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
@@ -86,6 +91,10 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            IEnumerable<AlumniUser> alum = _context.AlumniUsers.Where(x => x.Id.Equals(user.Id));
+            _context.AlumniUsers.Remove(alum.FirstOrDefault());
+            //_context.Users.Remove(user);
+            await _context.SaveChangesAsync();
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)

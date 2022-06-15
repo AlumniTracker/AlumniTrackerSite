@@ -15,7 +15,7 @@
 
             <h2>An Alumni Account</h2>
 
-            <div class="container-lg border text-center mt-3 Banner">
+            <div class="container-lg-4 border text-center mt-3 Banner">
                 <h1>User Info</h1>
             </div>
             <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
@@ -159,16 +159,16 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    
 
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                         <div class="form-group mt-3">
                             <label asp-for="Input.alum.Notes" class="control-label"></label>
-                            <input asp-for="Input.alum.Notes" class="form-control" />
+                            <textarea asp-for="Input.alum.Notes" class="form-control"></textarea>
                             <span asp-validation-for="Input.alum.Notes" class="text-danger"></span>
                         </div>
-
+                            <div class="col-md-4">
                         <div class="form-group mt-3 footer-buffer">
                             @*<input type="submit" value="Create" class="btn btn-primary" />*@
                             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>

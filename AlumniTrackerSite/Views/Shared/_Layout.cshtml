@@ -5,7 +5,6 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,9 +17,8 @@
 
     <header class="col-md-8 offset-2">
         <nav class="navbar navbar-expand-sm col-md-12">
-        <div class="col-md-12">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/Alumni-Logo-01.png" /></a>
-            <div class="float-right" >
+            <div class="col-md-12">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/Alumni-Logo-01.png" /></a>
                 <div class="float-right">
                     <div class="float-right">
                         <ul class="navbar-nav">
@@ -32,29 +30,23 @@
                     <br /><br /><br /><br />
                     <div id="header-content">
                         <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Index">Search</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Create">New Alumni</a>
-                            </li>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                @if (SignInManager.UserManager.GetUserName(User).Equals("CCFoundation@Centralia.edu"))
+                                { 
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Index">Search</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark navi" id="register" asp-area="Identity" asp-page="/Account/Register">Add Alumni</a>
+                                    </li>
+                                }
+                                else { }
+                            }
+                            else {}
                             <partial name="_LoginPartial" />
                         </ul>
                     </div>
-                </div>
-                <br /><br /><br /><br />
-                <div id="header-content">
-                    <ul class="navbar-nav">
-                            @if (SignInManager.IsSignedIn(User)) {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Index">Search</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark navi" asp-area="" asp-controller="AlumniUsers" asp-action="Create">New Alumni</a>
-                                </li>
-                            } else {}
-                            <partial name="_LoginPartial" />
-                    </ul>                 
                 </div>
             </div>
         </nav>
@@ -64,31 +56,46 @@
             @RenderBody()
         </main>
     </div>
-    <br /><br /><br /><br />
+    <br />
+    <br />
+    <br />
+    <br />
     <footer class="footer text-muted">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-2">
-                    <img src="~/Images/CCF-Logo-yellow.png" />
+        <div class="container footer">
+            <div class="row footer">
+                <div class="col-sm-2 offset-md-2">
+                    <img style="padding-top:10px; padding-right:50px;"src="~/Images/CCF-Logo-yellow.png" />
                 </div>
-                <div class="col-sm-2">
-                    <p class="yellowed">Contact Us:</p>
-                </div>
-                <div class="dashed-Vertical-Line"></div>
-                <div class="col-sm-2">
-                    <p class="yellowed">Find us:</p>
+                <div style="padding:20px;"class="col-sm-2">
+                    <p class="yellowed no-quarter">Contact Us:</p>
+                    <p class="no-quarter">360-623-8942</p>
+                    <p class="no-quarter">foundation@centralia.edu</p>
                 </div>
                 <div class="dashed-Vertical-Line"></div>
-                <div class="col-sm-2">
-                    <p class="yellowed">Find us:</p>
+                <div style="padding:20px;"class="col-sm-2">
+                    <p class="yellowed no-quarter">Find us:</p>
+                    <p class="no-quarter">401 Centralia College Blvd</p>
+                    
+                </div>
+                <div class="dashed-Vertical-Line"></div>
+                <div style="padding:40px;"class="col-sm-2">
+                    <ul class="navbar-nav">
+                        <li>
+                            <a href="https://www.linkedin.com/groups/13706636/" class="">
+                                <img style="width:25px;height:25px;object-fit:cover;object-position:50% 50%" src="~/Images/footer-linkedin.webp" />
+                            </a>
+                            <a href="http://www.facebook.com/centraliacollegefoundation" class="">
+                                <img style="width:25px;height:25px;object-fit:cover;object-position:50% 50%" src="~/Images/footer-facebook.png" />
+                            </a>
+                            <a href="https://www.instagram.com/centralia_college_foundation/" class="">
+                                <img style="width:25px;height:25px;object-fit:cover;object-position:50% 50%" src="~/Images/footer-insta.png" />
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        @*</div>*@
-
-
     </footer>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
