@@ -85,10 +85,6 @@ namespace AlumniTrackerSite.Data
 
             message.Subject = subject;
             
-            message.Body = new TextPart("html")
-            {
-                Text = JSONBody + "<h2><img src='www.google.com/images/23' /></h2>"
-
             message.Body = new TextPart("plain")
             {
                 Text = body
