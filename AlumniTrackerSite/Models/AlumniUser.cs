@@ -36,7 +36,7 @@ namespace AlumniTrackerSite.Models
         [PersonalData]
         [MaxLength(500)]
         public string? Notes { get; set; }
-        public DateTime? DateModified { get; set; }
+        public DateTime? DateModified { get;  set; }
         [PersonalData]
         [MaxLength(100)]
         public string? Address { get; set; }

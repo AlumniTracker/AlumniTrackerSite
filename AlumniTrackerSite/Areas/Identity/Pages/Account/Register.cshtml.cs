@@ -75,6 +75,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            // Lets us display inputs for, and bind inputs for Alumni.
             public AlumniUser alum { get; set; }
         }
 
@@ -98,7 +99,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
                 }
 
                 var user = CreateUser();
-                       // AlumniUser data
+                    // AlumniUser data
                 alumniUser.DateModified = DateTime.Today;
                 alumniUser.Id = user.Id;
                 _context.Add(alumniUser);
@@ -125,15 +126,17 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Email.Confirmation",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
+                    // commented code is boilerplate code that should theoretically never run, but just incase
+
+                    //if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    //{
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
+                    //}
+                    //else
+                    //{
+                    //    await _signInManager.SignInAsync(user, isPersistent: false);
+                    //    return LocalRedirect(returnUrl);
+                    //}
                 }
                 foreach (var error in result.Errors)
                 {

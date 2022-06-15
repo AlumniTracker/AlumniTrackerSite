@@ -25,23 +25,34 @@ namespace AlumniTrackerSite
             _userManager = userManager;
             _logger = logger;
         }
-
+        //public void CSV()
+        //{
+        //    Response.Redirect("~/Images/Alumni-Logo-01");
+        //}
         // GET: AlumniUsers
-        [Authorize]
+        [Authorize] //(Roles = "Admin,SuperAdmin")
         public async Task<IActionResult> Index()//replace this to be search, and then use general input?
         {
-              return _context.AlumniUsers != null ? 
-                          View(await _context.AlumniUsers.ToListAsync()) :
-                          Problem("Entity set 'TrackerContext.AlumniUsers'  is null.");
+            return _context.AlumniUsers != null ?
+                        View(await _context.AlumniUsers.ToListAsync()) :
+                        Problem("Entity set 'TrackerContext.AlumniUsers'  is null.");
         }
-        
+        //public AlumniUser alumniUser
+        //{
+        //    get
+        //    {
+        //    }
+
+        //}
+
         [HttpPost]
-        [Authorize]
+        [Authorize]//(Roles = "Admin,SuperAdmin")
         public IActionResult Index(string SearchPhrase, string type)
         {
-            //if (!GeneralInput(_logger, SearchPhrase)) return View(); // Returns complete index, may be bad?
-            //if (!GeneralInput(_logger, type)) return View();         // Again Returns complete Index 
-            
+            //if (true)
+            //{
+            //    Response.SendFileAsync("");
+            //}
             return View(SearchHelper(SearchPhrase, type));
         }
         public IEnumerable<AlumniUser> SearchHelper(string Phrase, string Type)
@@ -53,25 +64,25 @@ namespace AlumniTrackerSite
             {
                 switch (Type)
                 {
-                    case "studentid": //
+                    case "studentid":   // find alumni who have this exact studentid
                         return (_context.AlumniUsers
                             .Where(c => c.StudentId.ToLower() == Phrase.ToLower()));
 
-                    case "name":
+                    case "name":        
                         return (_context.AlumniUsers
                             .Where(c => c.Name.ToLower().Contains(Phrase.ToLower())));
 
-                    case "employer":
+                    case "employer":    
                         return (_context.AlumniUsers
                             .Where(c => c.EmployerName.ToLower().Contains(Phrase.ToLower())));
 
-                    case "yeargrad":
+                    case "yeargrad":    
                         return (_context.AlumniUsers
                             .Where(c => c.YearGraduated.ToLower().Contains(Phrase.ToLower())));
 
-                    case "degreepath":
+                    case "degreepath": 
                         return (_context.AlumniUsers
-                            .Where(c => c.Degree.ToLower().Contains(Phrase.ToLower()))); ;
+                            .Where(c => c.Degree.ToLower().Contains(Phrase.ToLower())));
 
                     default:
                         return _context.AlumniUsers.ToList(); // Returns Full List
@@ -80,22 +91,9 @@ namespace AlumniTrackerSite
             return _context.AlumniUsers.ToList(); // Returns Full list
 
         }
-        //public bool Mapper(int StudentID)
-        //{
-        //    Random random = new Random();
-        //    string mapID = random.Next(1000000000).ToString(); 
-        //    HttpContext.Session.SetString(mapID, StudentID.ToString()); 
-        //    return true;
-        //}
-        //public int IdGetter(string? mapID)
-        //{
-        //    int StudentID;
-        //    int.TryParse(HttpContext.Session.GetString(mapID), out StudentID);
-        //    return StudentID;
-        //}
         // GET: AlumniUsers/Details/5
-        [Authorize]
-        public async Task<IActionResult> Details(string? idString)// be able to map random numbers to an id per session
+        [Authorize(Roles = "Admin,SuperAdmin")]
+        public async Task<IActionResult> Details(string? idString)
         {
             if (idString == null || _context.AlumniUsers == null)
             {
@@ -113,8 +111,8 @@ namespace AlumniTrackerSite
         }
 
         // GET: AlumniUsers/Create
-        [Authorize]
-        public IActionResult Create()
+        [Authorize]//(Roles = "Admin,SuperAdmin")
+        public IActionResult Create() // unused page
         {
             return View();
         }
@@ -124,13 +122,11 @@ namespace AlumniTrackerSite
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> Create([Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,DateModified,Address,City,State,Zip,Phone,AlumniId,Id")] AlumniUser alumniUser)
+        [Authorize]//(Roles = "Admin,SuperAdmin")
+        public async Task<IActionResult> Create([Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,DateModified,Address,City,State,Zip,Phone,AlumniId,Id")] AlumniUser alumniUser, [Bind("Email")] string  email)
         {
             if (!CheckInputs(_logger, alumniUser))
-            {
-                return View(); // CHANGE TO ERROR
-            }
+            { return View(); } // Change to error
             if (ModelState.IsValid)
             {
                 alumniUser.DateModified = DateTime.Today;
@@ -159,7 +155,7 @@ namespace AlumniTrackerSite
 
 
         // GET: AlumniUsers/Edit/5
-        [Authorize]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> Edit(string? id)
         {
             if (id == null || _context.AlumniUsers == null)
@@ -180,7 +176,7 @@ namespace AlumniTrackerSite
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> Edit(string id, [Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,DateModified,Address,City,State,Zip,Phone,AlumniId,Id")] AlumniUser alumniUser)
         {
             if (id != alumniUser.Id)
@@ -214,7 +210,7 @@ namespace AlumniTrackerSite
         }
 
         // GET: AlumniUsers/Delete/5
-        [Authorize]
+        [Authorize]//(Roles = "Admin,SuperAdmin")
         public async Task<IActionResult> Delete(string? id)
         {
             if (id == null || _context.AlumniUsers == null)
@@ -235,7 +231,7 @@ namespace AlumniTrackerSite
         // POST: AlumniUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize]//(Roles = "Admin,SuperAdmin")
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.AlumniUsers == null)

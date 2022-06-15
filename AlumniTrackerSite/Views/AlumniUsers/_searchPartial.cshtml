@@ -1,5 +1,5 @@
 ﻿@using(@Html.BeginForm("Index", "AlumniUsers", FormMethod.Post))
-{
+{ @*attaches to index page for searching *@
     <input type="text" name="SearchPhrase" id="SearchPhrase" />
     <select name ="type" id="type">
         <option value="name">Name</option>
@@ -9,6 +9,6 @@
         <option value="degree">Degree Path</option>
     </select>
 
-    <input type="submit" name="Submit" id="Submit" />
+    <input type="submit" name="Search" id="Submit" title="Search" class="navi"/>
     
 }
