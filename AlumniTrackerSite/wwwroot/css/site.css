@@ -22,10 +22,11 @@ body {
     float:right;
 }
 .dashed-Vertical-Line {
-    margin-top: 38px ;
+    margin: 38px ;
+    margin-bottom:15px;
     height: 45px;
     border-right: dashed 1px hsla(0,0%,100%,.5);
-    border-left: 1px dashed rgba(0,0,0,.35);
+    /*border-left: 1px dashed rgba(0,0,0,.35);*/
     width: 0 !important;
     min-width: 0 !important;
  /*   padding: 0;
@@ -55,14 +56,18 @@ button{
     border:0px solid white;
     background-color:Background;
 }
+.yellowed {
+    color: #FECD06;
+}
 .footer {
     position: absolute;
     bottom: 0;
     margin-bottom: 0px;
     margin: 26px 0px 0px calc((100% - 980px) * 0.5);
+    max-height:120px;
     width: 100%;
     white-space: nowrap;
-    line-height: 100px;
+    /*line-height: 65px;*/
     background-color: #082E6C;
     left: 0;
     margin-left: 0;
@@ -110,4 +115,11 @@ button{
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     background-color: #082E6C;
     color: #FECD06;
+}
+.no-quarter {
+    height:20px;
+    margin:5px;
+}
+.yellowed {
+
 }

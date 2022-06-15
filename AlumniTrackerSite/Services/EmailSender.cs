@@ -21,11 +21,28 @@ namespace AlumniTrackerSite.Services
         public string AccountName { get; set; }
         public string AccountPass { get; set; }
 
+        public async Task SendConfirmAsync(string toEmail, string returnUrl)
+        {
+            await Email.SendConfirmMessage(_logger, returnUrl, toEmail);
+        }
+        public async Task SendResetAsync(string toEmail, string returnUrl)
+        {
+            await Email.SendResetPasswordMessage(_logger, returnUrl, toEmail);
+        }
         public async Task SendEmailAsync(string toEmail, string subject, string message)
         {
             if (string.IsNullOrEmpty(AccountName) || string.IsNullOrEmpty(AccountPass))
             {
                 throw new Exception("Null UserAccount");
+            }
+            switch (subject)
+            {
+                case "Email.Confirmation":
+                    await SendConfirmAsync(toEmail, message);
+                        break;
+                case "Email.Reset":
+                    await SendResetAsync(toEmail, message);
+                        break;
             }
             await Execute(subject, message, toEmail);
         }
@@ -33,12 +50,8 @@ namespace AlumniTrackerSite.Services
         public async Task Execute(string subject, string message, string toEmail)
         {
             string response = await Email.SendMessage(_logger, toEmail, subject, message);
-            //EventId result = new EventId(200);
-            bool result = response.Contains("2.0.0 OK");
 
-            _logger.LogInformation(result
-                                   ? $"Email to {toEmail} queued successfully!"
-                                   : $"Failure Email to {toEmail}");
+            //EventId result = new EventId(200);
             //// Disable click tracking.
             //// See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
             //msg.SetClickTracking(false, false);
