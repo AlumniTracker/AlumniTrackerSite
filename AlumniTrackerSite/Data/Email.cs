@@ -84,8 +84,8 @@ namespace AlumniTrackerSite.Data
             message.To.Add(MailboxAddress.Parse(reciever));
 
             message.Subject = subject;
-
-            message.Body = new TextPart("html")
+            
+            message.Body = new TextPart("plain")
             {
                 Text = body
             };

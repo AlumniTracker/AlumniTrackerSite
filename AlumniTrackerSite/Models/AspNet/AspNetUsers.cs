@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AlumniTrackerSite.Models
+namespace AlumniTrackerSite.Models.AspNet
 {
     public partial class AspNetUsers : IdentityUser
     {

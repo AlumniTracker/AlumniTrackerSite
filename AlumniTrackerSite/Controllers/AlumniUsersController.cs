@@ -19,12 +19,14 @@ namespace AlumniTrackerSite
         private readonly TrackerContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<AlumniUsersController> _logger;
+        RoleManager<IdentityRole> _roleManager;
 
-        public AlumniUsersController(TrackerContext context, UserManager<IdentityUser> userManager, ILogger<AlumniUsersController> logger)
+        public AlumniUsersController(TrackerContext context, UserManager<IdentityUser> userManager, ILogger<AlumniUsersController> logger, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
             _logger = logger;
+            _roleManager = roleManager;
         }
         public FileStreamResult CSV()
         {

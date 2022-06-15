@@ -32,6 +32,24 @@ namespace UnitTest
         //    }
         //}
         [TestMethod]
+        public void TestSecurity_MaliciousInput()
+        {
+            string[] BadInputs = { "1:1", "DROP TABLE", "DROP DATABASE", "<i>tofu</i>" };
+            foreach (string BadInput in BadInputs)
+            {
+                //Assert.IsFalse(GeneralInput(BadInput));
+            }
+        }
+        [TestMethod]
+        public void TestSecurity_FalseEmailInput()
+        {
+            string[] BadEmails = { "Aiden", "1", ",", ".';[]", "mgrant@hotmail.", "@hotmail.com", "mgrant@.com", "mgrant@hotmail.c" };
+            foreach (string BadEmail in BadEmails)
+            {
+                //Assert.IsFalse(EmailInput(BadEmail));
+            }
+        }
+        [TestMethod]
         public void TestSecurity_TrueEmailInput()
         {
             string[] GoodEmails = { "mgrant@hotmail.com", "consuelo26@yahoo.com",
@@ -52,10 +70,10 @@ namespace UnitTest
                 "aiyana.koss@heidenreich.com", "cicero.sawayn@gmail.com", "tremayne.hartmann@mueller.org",
                 "marlon.conroy@okuneva.com", "bauch.louie@gmail.com", "saige.kreiger@yahoo.com",
                  };
-            //foreach (string GoodEmail in GoodEmails)
-            //{
-            //    Assert.IsTrue(EmailInput(GoodEmail));
-            //}
+            foreach (string GoodEmail in GoodEmails)
+            {
+                //Assert.IsTrue(EmailInput(GoodEmail));
+            }
         }
         [TestMethod]
         public void Test()

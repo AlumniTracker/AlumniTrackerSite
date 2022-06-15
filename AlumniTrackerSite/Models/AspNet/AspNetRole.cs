@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlumniTrackerSite.Models.AspNet;
+using System;
 using System.Collections.Generic;
 
 namespace AlumniTrackerSite.Models
