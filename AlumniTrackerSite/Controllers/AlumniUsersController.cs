@@ -251,7 +251,11 @@ namespace AlumniTrackerSite
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        public string SmolDate(DateTime dateToSmol)
+        {
+            string smolDate = dateToSmol.ToString("mm/dd/yyyy");
+            return smolDate;
+        }
         private bool AlumniUserExists(string id)
         {
           return (_context.AlumniUsers?.Any(e => e.StudentId == id)).GetValueOrDefault();

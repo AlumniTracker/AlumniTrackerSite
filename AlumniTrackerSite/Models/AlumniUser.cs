@@ -57,5 +57,6 @@ namespace AlumniTrackerSite.Models
         public string? Id { get; set; }
 
         public virtual AspNetUsers? IdNavigation { get; set; }
+        
     }
 }
