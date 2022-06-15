@@ -1,4 +1,5 @@
 ﻿@*Lets the admin download a CSV from the search page*@
-@using(@Html.BeginForm("Index", "AlumniUsers", FormMethod.Post)) {
-    @*<input type="button" name="btnCSV" id="CSV" onclick="@" />*@
+@using(@Html.BeginForm("CSV", "AlumniUsers", FormMethod.Post)) {
+    <input type="submit" name="btnCSV" id="CSV" value="Download CSV"/>
+    
 }

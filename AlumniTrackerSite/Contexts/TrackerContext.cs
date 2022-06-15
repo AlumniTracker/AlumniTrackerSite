@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using AlumniTrackerSite.Models;
 using AlumniTrackerSite.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace AlumniTrackerSite.Contexts
 {
@@ -17,6 +19,44 @@ namespace AlumniTrackerSite.Contexts
         {
             Configuration = configuration;
         }
+        public List<Alumnis> GetAlumnis()
+        {
+            List<Alumnis> Alumnees = new List<Alumnis>();
+            using (SqlConnection conn = new SqlConnection(Configuration.GetConnectionString("conn")))
+            {
+                SqlCommand cmd = new SqlCommand("GetAlumnis", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    var alum = new Alumnis();
+                    alum.AlumniId = dr.GetInt32(0);
+                    alum.StudentId = dr.GetString(1);
+                    alum.Name = dr.GetString(2);
+
+                    if (!dr.IsDBNull(3)) alum.EmployerName = dr.GetString(3);
+                    if (!dr.IsDBNull(4)) alum.FieldofEmployment = dr.GetString(4);
+                    if (!dr.IsDBNull(5)) alum.YearGraduated = dr.GetString(5);
+                    if (!dr.IsDBNull(6)) alum.Degree = dr.GetString(6);
+                    if (!dr.IsDBNull(7)) alum.Notes = dr.GetString(7);
+
+                    alum.DateModified = dr.GetDateTime(8);
+
+                    if (!dr.IsDBNull(9)) alum.Address = dr.GetString(9);
+                    if (!dr.IsDBNull(10)) alum.City = dr.GetString(10);
+                    if (!dr.IsDBNull(11)) alum.State = dr.GetString(11);
+                    if (!dr.IsDBNull(12)) alum.Zip = dr.GetString(12);
+
+                    alum.Email = dr.GetString(13);
+                    alum.Id = dr.GetString(14);
+                    Alumnees.Add(alum);
+                }
+                dr.Close();
+            }
+            return Alumnees;
+                
+        } 
 
         public virtual DbSet<AdminUser> AdminUsers { get; set; } = null!;
         public virtual DbSet<AlumniUser> AlumniUsers { get; set; } = null!;
@@ -35,6 +75,7 @@ namespace AlumniTrackerSite.Contexts
                 optionsBuilder.UseSqlServer(Configuration.GetConnectionString("conn"));
             }
         }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -10,6 +10,7 @@ using AlumniTrackerSite.Models;
 using static AlumniTrackerSite.Data.Security;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using AlumniTrackerSite.Data;
 
 namespace AlumniTrackerSite
 {
@@ -25,70 +26,87 @@ namespace AlumniTrackerSite
             _userManager = userManager;
             _logger = logger;
         }
-        //public void CSV()
-        //{
-        //    Response.Redirect("~/Images/Alumni-Logo-01");
-        //}
+        public FileStreamResult CSV()
+        {
+            string filepath = Directory.GetCurrentDirectory();
+            filepath += @"\wwwroot\CSVS\Alum.csv";
+            CSVBuilder.MakeCSV(_context, filepath);
+            FileStream file = new FileStream(filepath, FileMode.Open, FileAccess.Read);
+            return new FileStreamResult(file, "text/csv");
+            //MimeType
+        }
         // GET: AlumniUsers
         [Authorize] //(Roles = "Admin,SuperAdmin")
         public async Task<IActionResult> Index()//replace this to be search, and then use general input?
         {
-            return _context.AlumniUsers != null ?
-                        View(await _context.AlumniUsers.ToListAsync()) :
+            return _context.GetAlumnis() != null ?
+                        View(_context.GetAlumnis()) :
                         Problem("Entity set 'TrackerContext.AlumniUsers'  is null.");
         }
-        //public AlumniUser alumniUser
-        //{
-        //    get
-        //    {
-        //    }
-
-        //}
 
         [HttpPost]
         [Authorize]//(Roles = "Admin,SuperAdmin")
         public IActionResult Index(string SearchPhrase, string type)
         {
-            //if (true)
-            //{
-            //    Response.SendFileAsync("");
-            //}
             return View(SearchHelper(SearchPhrase, type));
         }
-        public IEnumerable<AlumniUser> SearchHelper(string Phrase, string Type)
+        public IEnumerable<Alumnis> SearchHelper(string Phrase, string Type)
         {
-            if(!GeneralInput(_logger, Phrase)) return new List<AlumniUser>();
-            if (!GeneralInput(_logger, Type)) return new List<AlumniUser>();
+            if(!GeneralInput(_logger, Phrase)) return new List<Alumnis>();
+            if (!GeneralInput(_logger, Type)) return new List<Alumnis>();
 
             if (Phrase != null)
             {
                 switch (Type)
                 {
                     case "studentid":   // find alumni who have this exact studentid
-                        return (_context.AlumniUsers
+                        return (_context.GetAlumnis()
                             .Where(c => c.StudentId.ToLower() == Phrase.ToLower()));
 
-                    case "name":        
-                        return (_context.AlumniUsers
+                    case "name":
+                        return (_context.GetAlumnis()
                             .Where(c => c.Name.ToLower().Contains(Phrase.ToLower())));
 
-                    case "employer":    
-                        return (_context.AlumniUsers
+                    case "employer":
+                        return (_context.GetAlumnis()
                             .Where(c => c.EmployerName.ToLower().Contains(Phrase.ToLower())));
 
-                    case "yeargrad":    
-                        return (_context.AlumniUsers
+                    case "yeargrad":
+                        return (_context.GetAlumnis()
                             .Where(c => c.YearGraduated.ToLower().Contains(Phrase.ToLower())));
 
-                    case "degreepath": 
-                        return (_context.AlumniUsers
+                    case "degreepath":
+                        return (_context.GetAlumnis()
                             .Where(c => c.Degree.ToLower().Contains(Phrase.ToLower())));
 
                     default:
-                        return _context.AlumniUsers.ToList(); // Returns Full List
+                        return _context.GetAlumnis(); 
+                        // Returns Full List
+                        //case "studentid":   // find alumni who have this exact studentid
+                        //    return (_context.AlumniUsers
+                        //        .Where(c => c.StudentId.ToLower() == Phrase.ToLower()));
+
+                        //case "name":        
+                        //    return (_context.AlumniUsers
+                        //        .Where(c => c.Name.ToLower().Contains(Phrase.ToLower())));
+
+                        //case "employer":    
+                        //    return (_context.AlumniUsers
+                        //        .Where(c => c.EmployerName.ToLower().Contains(Phrase.ToLower())));
+
+                        //case "yeargrad":    
+                        //    return (_context.AlumniUsers
+                        //        .Where(c => c.YearGraduated.ToLower().Contains(Phrase.ToLower())));
+
+                        //case "degreepath": 
+                        //    return (_context.AlumniUsers
+                        //        .Where(c => c.Degree.ToLower().Contains(Phrase.ToLower())));
+
+                        //default:
+                        //    return _context.AlumniUsers.ToList(); // Returns Full List
                 }
             }
-            return _context.AlumniUsers.ToList(); // Returns Full list
+            return _context.GetAlumnis(); // Returns Full list
 
         }
         // GET: AlumniUsers/Details/5
@@ -211,7 +229,7 @@ namespace AlumniTrackerSite
 
         // GET: AlumniUsers/Delete/5
         [Authorize]//(Roles = "Admin,SuperAdmin")
-        public async Task<IActionResult> Delete(string? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.AlumniUsers == null)
             {
@@ -219,7 +237,7 @@ namespace AlumniTrackerSite
             }
 
             var alumniUser = await _context.AlumniUsers
-                .FirstOrDefaultAsync(m => m.StudentId == id);
+                .FirstOrDefaultAsync(m => m.AlumniId == id);
             if (alumniUser == null)
             {
                 return NotFound();
@@ -232,14 +250,14 @@ namespace AlumniTrackerSite
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize]//(Roles = "Admin,SuperAdmin")
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             if (_context.AlumniUsers == null)
             {
                 return Problem("Entity set 'TrackerContext.AlumniUsers'  is null.");
             }
             //FindAsync(id);
-            AlumniUser? alumniUser = await _context.AlumniUsers.Where(c => c.StudentId == c.StudentId).FirstOrDefaultAsync();
+            AlumniUser? alumniUser = await _context.AlumniUsers.Where(c => c.AlumniId == c.AlumniId).FirstOrDefaultAsync();
             if (alumniUser != null)
             {
                  IdentityUser user = await _userManager.FindByIdAsync(alumniUser.Id);

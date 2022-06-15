@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AlumniTrackerSite.Models.AlumniUser>
+﻿@model IEnumerable<AlumniTrackerSite.Models.Alumnis>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,7 +7,7 @@
 
 <h1>Index</h1>
 <partial name="_searchPartial" />
-@*<partial name="_csvPartial" />*@
+<partial name="_csvPartial" />
 <p>
     <a asp-action="Create">Create New</a>
 <table class="table">
@@ -45,7 +45,7 @@
                 @Html.DisplayNameFor(model => model.Zip)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Phone)
+                @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DateModified)
@@ -87,7 +87,7 @@
                 @Html.DisplayFor(modelItem => item.Zip)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Phone)
+                @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateModified)
@@ -97,7 +97,7 @@
 @*                <a asp-action="Details" asp-route-id="@item.StudentId">Details</a> |*@
 
 
-                <a asp-action="Delete" asp-route-id="@item.StudentId">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.AlumniId">Delete</a>
             </td>
         </tr>
 }
