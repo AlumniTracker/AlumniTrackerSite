@@ -21,6 +21,8 @@ builder.Services.AddAuthorization(options =>
         builder => builder.RequireRole("SuperAdmin", "Admin", "User"));
     options.AddPolicy("writepolicy",
         builder => builder.RequireRole("Admin", "SuperAdmin"));
+    options.AddPolicy("Administrator",
+        builder => builder.RequireRole("SuperAdmin"));
 });
 
 // Add services to the container.
