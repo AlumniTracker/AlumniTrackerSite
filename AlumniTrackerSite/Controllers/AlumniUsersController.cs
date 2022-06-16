@@ -28,6 +28,7 @@ namespace AlumniTrackerSite
             _logger = logger;
             _roleManager = roleManager;
         }
+        [Authorize(Roles = "SuperAdmin")]
         public FileStreamResult CSV()
         {
             string filepath = Directory.GetCurrentDirectory();
@@ -38,7 +39,7 @@ namespace AlumniTrackerSite
             //MimeType
         }
         // GET: AlumniUsers
-        [Authorize] //(Roles = "Admin,SuperAdmin")
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> Index()//replace this to be search, and then use general input?
         {
             return _context.GetAlumnis() != null ?
@@ -47,7 +48,7 @@ namespace AlumniTrackerSite
         }
 
         [HttpPost]
-        [Authorize]//(Roles = "Admin,SuperAdmin")
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public IActionResult Index(string SearchPhrase, string type)
         {
             return View(SearchHelper(SearchPhrase, type));
@@ -131,7 +132,7 @@ namespace AlumniTrackerSite
         }
 
         // GET: AlumniUsers/Create
-        [Authorize]//(Roles = "Admin,SuperAdmin")
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public IActionResult Create() // unused page
         {
             return View();
@@ -142,7 +143,7 @@ namespace AlumniTrackerSite
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]//(Roles = "Admin,SuperAdmin")
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> Create([Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,DateModified,Address,City,State,Zip,Phone,AlumniId,Id")] AlumniUser alumniUser, [Bind("Email")] string  email)
         {
             if (!CheckInputs(_logger, alumniUser))
@@ -230,7 +231,7 @@ namespace AlumniTrackerSite
         }
 
         // GET: AlumniUsers/Delete/5
-        [Authorize]//(Roles = "Admin,SuperAdmin")
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.AlumniUsers == null)
@@ -251,7 +252,7 @@ namespace AlumniTrackerSite
         // POST: AlumniUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize]//(Roles = "Admin,SuperAdmin")
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             if (_context.AlumniUsers == null)

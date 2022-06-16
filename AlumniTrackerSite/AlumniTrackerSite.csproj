@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\Tracker\" />
+    <Folder Include="ReadMe\" />
     <Folder Include="SQL Procs\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>

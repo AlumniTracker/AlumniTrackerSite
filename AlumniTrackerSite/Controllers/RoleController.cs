@@ -28,6 +28,7 @@ namespace AlumniTrackerSite.Controllers
         }
 
         //[Authorize(Policy = "writepolicy")]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> Update(string id)
         {
             IdentityRole role = await roleManager.FindByIdAsync(id);
@@ -45,6 +46,7 @@ namespace AlumniTrackerSite.Controllers
             });
         }
         //[Authorize(Policy = "writepolicy")]
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Update(RoleModification model)
         {
@@ -79,6 +81,7 @@ namespace AlumniTrackerSite.Controllers
         }
 
         //[Authorize(Policy = "readpolicy")]
+        [Authorize(Roles = "SuperAdmin")]
         public ViewResult Index() => View(roleManager.Roles);
         // GET: RoleController
         //public ActionResult Index()
@@ -88,12 +91,14 @@ namespace AlumniTrackerSite.Controllers
         //}
 
         // GET: RoleController/Details/5
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Details(int id)
         {
             return View(id);
         }
 
         // GET: RoleController/Create
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Create()
         {
             return View(new IdentityRole());
@@ -102,7 +107,7 @@ namespace AlumniTrackerSite.Controllers
         // POST: RoleController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Policy = "writepolicy")]
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Create(IdentityRole Role
             )
         {
@@ -112,12 +117,14 @@ namespace AlumniTrackerSite.Controllers
         }
 
         // GET: RoleController/Edit/5
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Edit(int id)
         {
             return View(id);
         }
 
         // POST: RoleController/Edit/5
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -133,6 +140,7 @@ namespace AlumniTrackerSite.Controllers
         }
 
         // GET: RoleController/Delete/5
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Delete(int id)
         {
             return View();
@@ -141,6 +149,7 @@ namespace AlumniTrackerSite.Controllers
         // POST: RoleController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> Delete(string id)
         {
             IdentityRole role = await roleManager.FindByIdAsync(id);
@@ -156,6 +165,7 @@ namespace AlumniTrackerSite.Controllers
                 ModelState.AddModelError("", "No role found");
             return View("Index", roleManager.Roles);
         }
+        [Authorize(Roles = "SuperAdmin")]
         private void Errors(IdentityResult result)
         {
             foreach (IdentityError error in result.Errors)
