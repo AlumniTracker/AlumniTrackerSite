@@ -129,7 +129,7 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Email.Confirmation",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        $"Please confirm your account by <a href='{callbackUrl}'>clicking here</a>.");
 
                     // commented code is boilerplate code that should theoretically never run, but just incase
 
