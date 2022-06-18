@@ -72,41 +72,18 @@ namespace AlumniTrackerSite
 
                     case "employer":
                         return (_context.GetAlumnis()
-                            .Where(c => c.EmployerName.ToLower().Contains(Phrase.ToLower())));
+                            .Where(c => c.EmployerName?.ToLower().Contains(Phrase.ToLower())?? false));
 
                     case "yeargrad":
                         return (_context.GetAlumnis()
-                            .Where(c => c.YearGraduated.ToLower().Contains(Phrase.ToLower())));
+                            .Where(c => c.YearGraduated?.Contains(Phrase.ToLower()) ?? false));
 
                     case "degreepath":
                         return (_context.GetAlumnis()
-                            .Where(c => c.Degree.ToLower().Contains(Phrase.ToLower())));
+                            .Where(c => c.Degree?.ToLower().Contains(Phrase.ToLower())?? false));
 
                     default:
                         return _context.GetAlumnis(); 
-                        // Returns Full List
-                        //case "studentid":   // find alumni who have this exact studentid
-                        //    return (_context.AlumniUsers
-                        //        .Where(c => c.StudentId.ToLower() == Phrase.ToLower()));
-
-                        //case "name":        
-                        //    return (_context.AlumniUsers
-                        //        .Where(c => c.Name.ToLower().Contains(Phrase.ToLower())));
-
-                        //case "employer":    
-                        //    return (_context.AlumniUsers
-                        //        .Where(c => c.EmployerName.ToLower().Contains(Phrase.ToLower())));
-
-                        //case "yeargrad":    
-                        //    return (_context.AlumniUsers
-                        //        .Where(c => c.YearGraduated.ToLower().Contains(Phrase.ToLower())));
-
-                        //case "degreepath": 
-                        //    return (_context.AlumniUsers
-                        //        .Where(c => c.Degree.ToLower().Contains(Phrase.ToLower())));
-
-                        //default:
-                        //    return _context.AlumniUsers.ToList(); // Returns Full List
                 }
             }
             return _context.GetAlumnis(); // Returns Full list

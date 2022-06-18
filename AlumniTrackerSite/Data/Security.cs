@@ -7,7 +7,7 @@ namespace AlumniTrackerSite.Data
     public static class Security
     {
         private static string BlackList =
-            @"<>/\'{};:`&|^";
+            @",<>/\'{};:`&|^";
         private static string[] BlackListWords = { "DATABASE", "1:1", "1=1", "TABLE", "TRUNCATE", "SELECT", "UNION" };
         private static string NumberWhiteList = "0123456789";
         /// <summary>
