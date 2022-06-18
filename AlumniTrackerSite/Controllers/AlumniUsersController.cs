@@ -259,8 +259,7 @@ namespace AlumniTrackerSite
             {
                 return Problem("Entity set 'TrackerContext.AlumniUsers'  is null.");
             }
-            //FindAsync(id);
-            AlumniUser? alumniUser = await _context.AlumniUsers.Where(c => c.AlumniId == c.AlumniId).FirstOrDefaultAsync();
+            AlumniUser? alumniUser = await _context.AlumniUsers.Where(c => c.AlumniId == id).FirstOrDefaultAsync();
             if (alumniUser != null)
             {
                  IdentityUser user = await _userManager.FindByIdAsync(alumniUser.Id);
