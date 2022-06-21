@@ -1,4 +1,5 @@
 //using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static AlumniTrackerSite.Data.Security;
@@ -8,50 +9,40 @@ namespace UnitTest
     [TestClass]
     public class UnitTest1
     {
-        //public ILogger _log { get; set; }
-        //public void Init()
-        //{
-        //    _log = new ILogger<AlumniTrackerSite.AlumniUsersController>();
-        //}
-        //[TestMethod]
-        //public void TestSecurity_MaliciousInput()
-        //{
-        //    string[] BadInputs = { "1:1", "DROP TABLE", "DROP DATABASE", "<i>tofu</i>" };
-        //    foreach (string BadInput in BadInputs)
-        //    {
-        //        Assert.IsFalse(GeneralInput(BadInput));
-        //    }
-        //}
-        //[TestMethod]
-        //public void TestSecurity_FalseEmailInput()
-        //{
-        //    string[] BadEmails = { "Aiden", "1", ",", ".';[]", "mgrant@hotmail.", "@hotmail.com", "mgrant@.com", "mgrant@hotmail.c" };
-        //    foreach (string BadEmail in BadEmails)
-        //    {
-        //        Assert.IsFalse(EmailInput(BadEmail));
-        //    }
-        //}
+        public ILogger _log { get; set; }
+        public void Init()
+        {
+            var serviceProvider = new ServiceCollection()
+                .AddLogging()
+                .BuildServiceProvider();
+            var factory = serviceProvider.GetService<ILoggerFactory>();
+
+            _log = factory.CreateLogger<UnitTest1>();
+        }
         [TestMethod]
         public void TestSecurity_MaliciousInput()
         {
+            Init();
             string[] BadInputs = { "1:1", "DROP TABLE", "DROP DATABASE", "<i>tofu</i>" };
             foreach (string BadInput in BadInputs)
             {
-                //Assert.IsFalse(GeneralInput(BadInput));
+                Assert.IsFalse(GeneralInput(_log,BadInput));
             }
         }
         [TestMethod]
         public void TestSecurity_FalseEmailInput()
         {
-            string[] BadEmails = { "Aiden", "1", ",", ".';[]", "mgrant@hotmail.", "@hotmail.com", "mgrant@.com", "mgrant@hotmail.c" };
+            Init();
+            string[] BadEmails = { "Aiden", "1", ",", ".';[]", "mgrant@hotmail.", "@hotmail.com", "mgrant@.com", "mgrant@hotmail.c", ",.();'{}", "DROP TABLES" };
             foreach (string BadEmail in BadEmails)
             {
-                //Assert.IsFalse(EmailInput(BadEmail));
+                Assert.IsFalse(EmailInput(_log, BadEmail));
             }
         }
         [TestMethod]
         public void TestSecurity_TrueEmailInput()
         {
+            Init();
             string[] GoodEmails = { "mgrant@hotmail.com", "consuelo26@yahoo.com",
                 "hegmann.julio@yahoo.com", "maeve48@yahoo.com", "bhermiston@yahoo.com",
                 "tlowe@yahoo.com", "vokuneva@gmail.com", "considine.elinore@kunze.com",
@@ -72,7 +63,7 @@ namespace UnitTest
                  };
             foreach (string GoodEmail in GoodEmails)
             {
-                //Assert.IsTrue(EmailInput(GoodEmail));
+                Assert.IsTrue(EmailInput(_log,GoodEmail));
             }
         }
         [TestMethod]

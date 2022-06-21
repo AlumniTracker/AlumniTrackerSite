@@ -49,21 +49,24 @@ namespace AlumniTrackerSite.Data
             string[] words = input.Split(' ');
             foreach (string word in words)
             {
-                if(BlackListWords.Contains(word))
+                if (BlackListWords.Contains(word))
                 {
                     log.LogWarning("Possible Sql Injection '{input}' at {date}", input, DateTime.Now);
-                    return false; 
+                    return false;
                 }
             }
 
             // checks for Coding Characters
-            if (input.Contains(BlackList))
+            if (input.Any(BlackList.Contains))
             {
                 log.LogWarning("Bad Inputs '{input}' at {date}", input, DateTime.Now);
                 return false; 
-            }
+            } 
 
             return true;
+            
+
+            
         }
         public static bool EmailInput(ILogger log, string input)
         {

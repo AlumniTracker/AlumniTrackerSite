@@ -55,9 +55,12 @@ namespace AlumniTrackerSite.Models
         [Phone]
         [MaxLength(15)]
         public string? Phone { get; set; }
+        /// <summary>
+        /// Foreign Key to AspNetUser account
+        /// </summary>
         public string? Id { get; set; }
 
         public virtual AspNetUsers? IdNavigation { get; set; }
-        
+
     }
 }

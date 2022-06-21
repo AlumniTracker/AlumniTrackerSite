@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AlumniTrackerSite.Models
 {
+    /// <summary>
+    /// This model is for the CSV and Search page(AlumniUsersController Index page), so that the email is easier to display.
+    /// </summary>
     public class Alumnis
     {
         public int AlumniId { get; set; } // This is not their student ID
