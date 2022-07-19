@@ -131,17 +131,8 @@ namespace AlumniTrackerSite.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Email.Confirmation",
                         $"Please confirm your account by <a href='{callbackUrl}'>clicking here</a>.");
 
-                    // commented code is boilerplate code that should theoretically never run, but just incase
 
-                    //if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    //{
                     return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    //}
-                    //else
-                    //{
-                    //    await _signInManager.SignInAsync(user, isPersistent: false);
-                    //    return LocalRedirect(returnUrl);
-                    //}
                 }
                 foreach (var error in result.Errors)
                 {

@@ -11,6 +11,8 @@ using static AlumniTrackerSite.Data.Security;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using AlumniTrackerSite.Data;
+using System.Text.RegularExpressions;
+using System.Text;
 
 namespace AlumniTrackerSite
 {
@@ -31,12 +33,8 @@ namespace AlumniTrackerSite
         [Authorize(Roles = "SuperAdmin")]
         public FileStreamResult CSV()
         {
-            string filepath = Directory.GetCurrentDirectory();
-            filepath += @"\wwwroot\CSVS\Alum.csv";
-            CSVBuilder.MakeCSV(_context, filepath);
-            FileStream file = new FileStream(filepath, FileMode.Open, FileAccess.Read);
-            return new FileStreamResult(file, "text/csv");
-            //MimeType
+            // Would combine these, except this method can not pass _context without being non static
+            return CSVBuilder.MakeCSV(_context); ;
         }
         // GET: AlumniUsers
         [Authorize(Roles = "Admin,SuperAdmin")]
@@ -55,8 +53,15 @@ namespace AlumniTrackerSite
         }
         public IEnumerable<Alumnis> SearchHelper(string Phrase, string Type)
         {
-            if(!GeneralInput(_logger, Phrase)) return new List<Alumnis>();
-            if (!GeneralInput(_logger, Type)) return new List<Alumnis>();
+            // currently there is no error being sent to the user. So these are confusing to a user.
+            if (Phrase == null || Phrase == "") return _context.GetAlumnis();
+            if (!GeneralInput(_logger, Phrase)) return _context.GetAlumnis();
+            if (!GeneralInput(_logger, Type)) return  _context.GetAlumnis();
+
+
+            // Set up Regex, this only allows * to be used as a single character wildcard.
+            Phrase = Phrase.Replace("*", ".").ToLower();
+            Regex reg = new Regex(Phrase);
 
             if (Phrase != null)
             {
@@ -68,22 +73,38 @@ namespace AlumniTrackerSite
 
                     case "name":
                         return (_context.GetAlumnis()
-                            .Where(c => c.Name.ToLower().Contains(Phrase.ToLower())));
+                            .Where(c => reg.IsMatch(c.Name.ToLower())));
 
+                        // all of these search terms can be null. Which will throw an exception if not handled
                     case "employer":
                         return (_context.GetAlumnis()
-                            .Where(c => c.EmployerName?.ToLower().Contains(Phrase.ToLower())?? false));
+                            .Where(c =>
+                            {
+                                if(c.EmployerName != null) 
+                                { return reg.IsMatch(c.EmployerName.ToLower()); }
+                                return false;
+                            }));
 
                     case "yeargrad":
                         return (_context.GetAlumnis()
-                            .Where(c => c.YearGraduated?.Contains(Phrase.ToLower()) ?? false));
+                            .Where(c =>
+                            {
+                                if (c.YearGraduated != null) 
+                                { return reg.IsMatch(c.YearGraduated.ToLower()); }
+                                return false;
+                            }));
 
-                    case "degreepath":
+                    case "degree":
                         return (_context.GetAlumnis()
-                            .Where(c => c.Degree?.ToLower().Contains(Phrase.ToLower())?? false));
+                            .Where(c =>
+                            {
+                                if (c.Degree != null) 
+                                { return reg.IsMatch(c.Degree.ToLower()); }
+                                return false;
+                            }));
 
                     default:
-                        return _context.GetAlumnis(); 
+                        return _context.GetAlumnis();
                 }
             }
             return _context.GetAlumnis(); // Returns Full list
@@ -115,35 +136,37 @@ namespace AlumniTrackerSite
             return View();
         }
 
-        // POST: AlumniUsers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,SuperAdmin")]
-        public async Task<IActionResult> Create([Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,DateModified,Address,City,State,Zip,Phone,AlumniId,Id")] AlumniUser alumniUser, [Bind("Email")] string  email)
-        {
-            if (!CheckInputs(_logger, alumniUser))
-            { return View(); } // Change to error
-            if (ModelState.IsValid)
-            {
-                alumniUser.DateModified = DateTime.Today;
-                alumniUser.Id = _userManager.GetUserId(User);
-                if(_context.AlumniUsers.Where(m => m.Id.Equals(alumniUser.Id)).Any() || alumniUser.Id == null)
-                {
-                    //return 
-                }
-                _context.Add(alumniUser);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(alumniUser);
-        }
+
+// Not in use and is not functional, currently the register page is used instead
+        //// POST: AlumniUsers/Create
+        //// To protect from overposting attacks, enable the specific properties you want to bind to.
+        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Admin,SuperAdmin")]
+        //public async Task<IActionResult> Create([Bind("StudentId,Name,EmployerName,FieldofEmployment,YearGraduated,Degree,Notes,DateModified,Address,City,State,Zip,Phone,AlumniId,Id")] AlumniUser alumniUser, [Bind("Email")] string  email)
+        //{
+        //    if (!CheckInputs(_logger, alumniUser))
+        //    { return View(); } // Change to error
+        //    if (ModelState.IsValid)
+        //    {
+        //        alumniUser.DateModified = DateTime.Today;
+        //        alumniUser.Id = _userManager.GetUserId(User);
+        //        if(_context.AlumniUsers.Where(m => m.Id.Equals(alumniUser.Id)).Any() || alumniUser.Id == null)
+        //        {
+        //            //return 
+        //        }
+        //        _context.Add(alumniUser);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(alumniUser);
+        //}
 
         public string GetName(int id)
         {
             //some code to get alumniuser identity user
-            if (id == null || _context.AlumniUsers == null)
+            if (id == 0 || _context.AlumniUsers == null)
             {
                 return "not found";
             }

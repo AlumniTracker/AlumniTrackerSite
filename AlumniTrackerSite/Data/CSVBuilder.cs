@@ -3,17 +3,18 @@ using System.IO;
 using AlumniTrackerSite.Contexts;
 using AlumniTrackerSite.Models;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AlumniTrackerSite.Data
 {
     public static class CSVBuilder
     {
 
-        public static bool MakeCSV(TrackerContext _context, string filepath)
+        public static FileStreamResult MakeCSV(TrackerContext _context)
         {
             StringBuilder sb = new StringBuilder();
             List<Alumnis> Alums = _context.GetAlumnis();
-            if(Alums == null) { return false; }
+            if(Alums == null) { return null; }
             sb.AppendLine(
             "AlumniId" + ", " +
             "StudentId" + ", " +
@@ -49,8 +50,9 @@ namespace AlumniTrackerSite.Data
                     alumni.DateModified + ", "
                     );
             }
-            File.WriteAllText(filepath, sb.ToString());
-            return true;
+            Stream result = new MemoryStream(Encoding.ASCII.GetBytes(sb.ToString()));
+            // MimeType
+            return new FileStreamResult(result, "text/csv");
 
         }
     }
